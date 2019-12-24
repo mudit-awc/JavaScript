@@ -57,10 +57,12 @@ function eventDispatched_NonPoInvoices1(pId,pEvent){
 	}
 		case 'change':
 		{
+			console.log("inside change event");
 			switch(pEvent.srcElement.id)
             {
 				case 'proctype':
 				{
+					console.log("inside proctype");
 					switch(document.getElementById('proctype').value)
 					{
 					case 'Handling/Unloading':
@@ -89,7 +91,7 @@ function eventDispatched_NonPoInvoices1(pId,pEvent){
 					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
 					com.newgen.omniforms.formviewer.setTop("Frame8","860px");
 					com.newgen.omniforms.formviewer.setTop("LINE_DETAILS","448px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1185px");
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1250px");
 					return true;
 					
 					
@@ -108,7 +110,7 @@ function eventDispatched_NonPoInvoices1(pId,pEvent){
 					com.newgen.omniforms.formviewer.setVisible("Frame11", false);
 					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
 					com.newgen.omniforms.formviewer.setTop("Frame8","345px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","670px");
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","720px");
 					return true;
 					
 					
@@ -128,7 +130,7 @@ function eventDispatched_NonPoInvoices1(pId,pEvent){
 					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
 					com.newgen.omniforms.formviewer.setTop("Frame8","860px");
 					com.newgen.omniforms.formviewer.setTop("LINE_DETAILS","448px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1185px");
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1230px");
 					return true;
 					
 					
@@ -146,7 +148,7 @@ function eventDispatched_NonPoInvoices1(pId,pEvent){
 					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
 					com.newgen.omniforms.formviewer.setTop("Frame8","842px");
 					com.newgen.omniforms.formviewer.setTop("Frame10","446px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1175px");
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1220px");
 					return true;
 			
 			
@@ -164,7 +166,7 @@ function eventDispatched_NonPoInvoices1(pId,pEvent){
 					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
 					com.newgen.omniforms.formviewer.setTop("Frame8","739px");
 					com.newgen.omniforms.formviewer.setTop("Frame9","340px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1070px");
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1130px");
 					return true;
 					
 					
@@ -180,9 +182,9 @@ function eventDispatched_NonPoInvoices1(pId,pEvent){
 					com.newgen.omniforms.formviewer.setVisible("Frame10", false);
 					com.newgen.omniforms.formviewer.setVisible("Frame11", true);
 					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
-					com.newgen.omniforms.formviewer.setTop("Frame8","690px");
+					com.newgen.omniforms.formviewer.setTop("Frame8","730px");
 					com.newgen.omniforms.formviewer.setTop("Frame11","444px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1015px");
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1110px");
 					return true;
 			
 					default:
@@ -205,10 +207,29 @@ function eventDispatched_NonPoInvoices1(pId,pEvent){
 			
 				}
 				}
+				break;
+				/*case 'totaltaxableamt':
+				alert("you change total tax amount")
+				console.log("inside total taxable amt");
+				var perc=parseFloat(document.getElementById('Text67').value);
+				alert("total percentage is" +perc);
+				console.log(perc);
+				var ttamt = parseFloat(document.getElementById('totaltaxableamt').value);
+				console.log(ttamt);
+				alert("total amount you entered is"+ttamt);
+				var amt = (ttamt-((perc/100)*ttamt));
+				console.log(amt);
+				alert("final amount is "+amt);
+				var amount=amt.toString();
+				alert("total changed value is"+amount);
+				console.log("string value of amount");
+				com.newgen.omniforms.formviewer.setNGValue("Text69","amount");
+				alert("value is set");
+				break;*/
 			}
 		}
 	
-				
+		return true;		
 	}
 }
 	function validate_NonPoInvoices1(pEvent,activityName)

@@ -1257,9 +1257,9 @@ function formPopulated()
 				
 				case 'Initiator':
 				console.log("inside the activity  ");
-				com.newgen.omniforms.formviewer.setVisible("Label23", false);
+				/*com.newgen.omniforms.formviewer.setVisible("Label23", false);
 				com.newgen.omniforms.formviewer.setVisible("filestatus", false);
-				/*com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
+				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
 				com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
 				com.newgen.omniforms.formviewer.setEnabled("Frame8",false);
 				console.log("inside first switchw");
@@ -1278,13 +1278,12 @@ function formPopulated()
 				com.newgen.omniforms.formviewer.setEnabled("Frame9",false);
 				com.newgen.omniforms.formviewer.setEnabled("Frame7",false);
 				com.newgen.omniforms.formviewer.setEnabled("Frame11",false);
-				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
 				com.newgen.omniforms.formviewer.setVisible("Label38", false);
 				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
+
 				com.newgen.omniforms.formviewer.setHeight("Frame9","242px");
 				com.newgen.omniforms.formviewer.setHeight("Frame10","234px");
 				com.newgen.omniforms.formviewer.setHeight("Frame11","199px");
-				com.newgen.omniforms.formviewer.setHeight("Frame8","260px");
 				
 				break;
 				
@@ -1300,12 +1299,11 @@ function formPopulated()
 				com.newgen.omniforms.formviewer.setEnabled("Frame9",false);
 				com.newgen.omniforms.formviewer.setEnabled("Frame7",false);
 				com.newgen.omniforms.formviewer.setEnabled("Frame11",false);
-				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
 				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
 				com.newgen.omniforms.formviewer.setHeight("Frame9","242px");
 				com.newgen.omniforms.formviewer.setHeight("Frame10","234px");
 				com.newgen.omniforms.formviewer.setHeight("Frame11","199px");
-				com.newgen.omniforms.formviewer.setHeight("Frame8","260px");
+				
 				break;
 			}
 				
@@ -1352,22 +1350,8 @@ function formPopulated()
 					com.newgen.omniforms.formviewer.setNGValue("Text_snature1",com.newgen.omniforms.formviewer.getNGValue("natureofservice"));
 					com.newgen.omniforms.formviewer.setNGValue("Drop_ss1",com.newgen.omniforms.formviewer.getNGValue("servicegiveninstate"));
 					com.newgen.omniforms.formviewer.setNGValue("Text_splace1",com.newgen.omniforms.formviewer.getNGValue("placeofsupply"));
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1250px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","960px");
-					break;
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1185px");
 					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","960px");
-					break;
-					}
-					}
 					return true;
 					break;
 					
@@ -1391,22 +1375,7 @@ function formPopulated()
 					com.newgen.omniforms.formviewer.setNGValue("Date_inv2",com.newgen.omniforms.formviewer.getNGValue("invoicedate"));
 					com.newgen.omniforms.formviewer.setNGValue("Text_vgstin2",com.newgen.omniforms.formviewer.getNGValue("vendorgstin"));
 					com.newgen.omniforms.formviewer.setNGValue("Text_wgstin2",com.newgen.omniforms.formviewer.getNGValue("wclgstin"));
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","720px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					//com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","620px");
-					break;
-					
-					case 'Accounts':
-					//com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","620px");
-					break;
-					}
-					}
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","670px");
 					return true;
 					break;
 					
@@ -1437,22 +1406,7 @@ function formPopulated()
 					com.newgen.omniforms.formviewer.setNGValue("Text_snature1",com.newgen.omniforms.formviewer.getNGValue("natureofservice"));
 					com.newgen.omniforms.formviewer.setNGValue("Drop_ss1",com.newgen.omniforms.formviewer.getNGValue("servicegiveninstate"));
 					com.newgen.omniforms.formviewer.setNGValue("Text_splace1",com.newgen.omniforms.formviewer.getNGValue("placeofsupply"));
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1230px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","965px");
-					break;
-					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","965px");
-					break;
-					}
-					}
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1185px");
 					return true;
 					break;
 					
@@ -1480,22 +1434,7 @@ function formPopulated()
 					com.newgen.omniforms.formviewer.setNGValue("Text_wgstin3",com.newgen.omniforms.formviewer.getNGValue("wclgstin"));
 					com.newgen.omniforms.formviewer.setNGValue("Drop_ss2",com.newgen.omniforms.formviewer.getNGValue("servicegiveninstate"));
 					com.newgen.omniforms.formviewer.setNGValue("Text_splace2",com.newgen.omniforms.formviewer.getNGValue("placeofsupply"));
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1220px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","686px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","965px");
-					break;
-					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","686px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","965px");
-					break;
-					}
-					}
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1175px");
 					return true;
 					break;
 			
@@ -1513,22 +1452,7 @@ function formPopulated()
 					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
 					com.newgen.omniforms.formviewer.setTop("Frame8","739px");
 					com.newgen.omniforms.formviewer.setTop("Frame9","340px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1130px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","588px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","850px");
-					break;
-					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","588px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","850px");
-					break;
-					}
-					}
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1070px");
 					return true;
 					break;
 					
@@ -1544,7 +1468,7 @@ function formPopulated()
 					com.newgen.omniforms.formviewer.setVisible("Frame10", false);
 					com.newgen.omniforms.formviewer.setVisible("Frame11", true);
 					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
-					com.newgen.omniforms.formviewer.setTop("Frame8","730px");
+					com.newgen.omniforms.formviewer.setTop("Frame8","784px");
 					com.newgen.omniforms.formviewer.setTop("Frame11","444px");
 					com.newgen.omniforms.formviewer.setNGValue("Text_inv4",com.newgen.omniforms.formviewer.getNGValue("invoicenumber"));
 					com.newgen.omniforms.formviewer.setNGValue("Date_inv4",com.newgen.omniforms.formviewer.getNGValue("invoicedate"));
@@ -1557,22 +1481,7 @@ function formPopulated()
 					com.newgen.omniforms.formviewer.setNGValue("Text_snature2",com.newgen.omniforms.formviewer.getNGValue("natureofservice"));
 					com.newgen.omniforms.formviewer.setNGValue("Drop_ss3",com.newgen.omniforms.formviewer.getNGValue("servicegiveninstate"));
 					com.newgen.omniforms.formviewer.setNGValue("Text_splace3",com.newgen.omniforms.formviewer.getNGValue("placeofsupply"));
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1110px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","654px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","930px");
-					break;
-					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","654px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","930px");
-					break;
-					}
-					}
+					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1015px");
 					
 					return true;
 			break;
