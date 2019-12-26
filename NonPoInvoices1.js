@@ -208,24 +208,7 @@ function eventDispatched_NonPoInvoices1(pId,pEvent){
 				}
 				}
 				break;
-				/*case 'totaltaxableamt':
-				alert("you change total tax amount")
-				console.log("inside total taxable amt");
-				var perc=parseFloat(document.getElementById('Text67').value);
-				alert("total percentage is" +perc);
-				console.log(perc);
-				var ttamt = parseFloat(document.getElementById('totaltaxableamt').value);
-				console.log(ttamt);
-				alert("total amount you entered is"+ttamt);
-				var amt = (ttamt-((perc/100)*ttamt));
-				console.log(amt);
-				alert("final amount is "+amt);
-				var amount=amt.toString();
-				alert("total changed value is"+amount);
-				console.log("string value of amount");
-				com.newgen.omniforms.formviewer.setNGValue("Text69","amount");
-				alert("value is set");
-				break;*/
+				
 			}
 		}
 	
@@ -279,6 +262,34 @@ function getsetFieldValue()
 					case 'Freight':
 					case 'Repair and Supply: Minor Supply Items  - Part1':
 					console.log("inside process type 1");
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_pan1")==""){
+						alert("Enter the Value of PAN Number");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_inv1")==""){
+						alert("Enter the Value of Invoice Number");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Date_inv1")==""){
+						alert("Enter the Value of Invoice Date");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text36")==""){
+						alert("Enter the Value of Qty/Size");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text38")==""){
+						alert("Enter the Value of Rate");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text50")==""){
+						alert("Enter the Value of Amount");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("totaltaxableamt")==""){
+						alert("Enter the Value of Total Taxable Amount");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("totalbillamt")==""){
+						alert("Enter the Value of Total Bill Amount");
+					}
+					
+					
+					
+					else{
 					com.newgen.omniforms.formviewer.setNGValue("invoicenumber",com.newgen.omniforms.formviewer.getNGValue("Text_inv1"));
 					com.newgen.omniforms.formviewer.setNGValue("invoicedate",com.newgen.omniforms.formviewer.getNGValue("Date_inv1"));
 					com.newgen.omniforms.formviewer.setNGValue("mobilenumber",com.newgen.omniforms.formviewer.getNGValue("Text_mob1"));
@@ -290,7 +301,7 @@ function getsetFieldValue()
 					com.newgen.omniforms.formviewer.setNGValue("natureofservice",com.newgen.omniforms.formviewer.getNGValue("Text_snature1"));
 					com.newgen.omniforms.formviewer.setNGValue("servicegiveninstate",com.newgen.omniforms.formviewer.getNGValue("Drop_ss1"));
 					com.newgen.omniforms.formviewer.setNGValue("placeofsupply",com.newgen.omniforms.formviewer.getNGValue("Text_splace1"));
-					
+					}
 					
 					console.log("value in hidden field is"+invoicenumber);
 					break;
