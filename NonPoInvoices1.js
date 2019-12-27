@@ -286,9 +286,6 @@ function getsetFieldValue()
 					if(com.newgen.omniforms.formviewer.getNGValue("totalbillamt")==""){
 						alert("Enter the Value of Total Bill Amount");
 					}
-					
-					
-					
 					else{
 					com.newgen.omniforms.formviewer.setNGValue("invoicenumber",com.newgen.omniforms.formviewer.getNGValue("Text_inv1"));
 					com.newgen.omniforms.formviewer.setNGValue("invoicedate",com.newgen.omniforms.formviewer.getNGValue("Date_inv1"));
@@ -310,16 +307,64 @@ function getsetFieldValue()
 					case 'Other Logistic Expenses (Rail)':
 					case 'Primary Freight and Freight on clinker Sale (Rail)':
 					console.log("inside process type 2");
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_inv2")==""){
+						alert("Enter the Value of Invoice Number");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Date_inv2")==""){
+						alert("Enter the Value of Invoice Date");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_vgstin2")==""){
+						alert("Enter the Value of Vendor GSTIN");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_wgstin2")==""){
+						alert("Enter the Value of WCL GSTIN");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("totaltaxableamt")==""){
+						alert("Enter the Value of Total Taxable Amount");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("totalbillamt")==""){
+						alert("Enter the Value of Total Bill Amount ");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Combo3")==""){
+						alert("Enter the Value of Type ");
+					}
+					else{
 					com.newgen.omniforms.formviewer.setNGValue("invoicenumber",com.newgen.omniforms.formviewer.getNGValue("Text_inv2"));
 					com.newgen.omniforms.formviewer.setNGValue("invoicedate",com.newgen.omniforms.formviewer.getNGValue("Date_inv2"));
 					com.newgen.omniforms.formviewer.setNGValue("vendorgstin",com.newgen.omniforms.formviewer.getNGValue("Text_vgstin2"));
 					com.newgen.omniforms.formviewer.setNGValue("wclgstin",com.newgen.omniforms.formviewer.getNGValue("Text_wgstin2"));
+					}
 					break;
 					
 					case 'Demurrage and Wharfage (Plant/GU) (Road)':
 					case 'Other Logistic Expenses (Road)':
 					case 'Primary Freight and Freight on clinker Sale (Road)':
 					console.log("inside process type 3");
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_pan1")==""){
+						alert("Enter the Value of PAN Number");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_inv1")==""){
+						alert("Enter the Value of Invoice Number");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Date_inv1")==""){
+						alert("Enter the Value of Invoice Date");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text36")==""){
+						alert("Enter the Value of Qty/Size");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text38")==""){
+						alert("Enter the Value of Rate");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text50")==""){
+						alert("Enter the Value of Amount");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("totaltaxableamt")==""){
+						alert("Enter the Value of Total Taxable Amount");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("totalbillamt")==""){
+						alert("Enter the Value of Total Bill Amount");
+					}
+					else{
 					com.newgen.omniforms.formviewer.setNGValue("invoicenumber",com.newgen.omniforms.formviewer.getNGValue("Text_inv1"));
 					com.newgen.omniforms.formviewer.setNGValue("invoicedate",com.newgen.omniforms.formviewer.getNGValue("Date_inv1"));
 					com.newgen.omniforms.formviewer.setNGValue("mobilenumber",com.newgen.omniforms.formviewer.getNGValue("Text_mob1"));
@@ -331,10 +376,39 @@ function getsetFieldValue()
 					com.newgen.omniforms.formviewer.setNGValue("natureofservice",com.newgen.omniforms.formviewer.getNGValue("Text_snature1"));
 					com.newgen.omniforms.formviewer.setNGValue("servicegiveninstate",com.newgen.omniforms.formviewer.getNGValue("Drop_ss1"));
 					com.newgen.omniforms.formviewer.setNGValue("placeofsupply",com.newgen.omniforms.formviewer.getNGValue("Text_splace1"));
-					
+					}
 					break;
+					
 					case 'Travel Allowance Bills (TA Bills) (Hotel)':
 					console.log("inside process type 4");
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_inv3")==""){
+						alert("Enter the Value of Total Invoice Number");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Date_inv3")==""){
+						alert("Enter the Value of Total Invoice Date");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_pan2")==""){
+						alert("Enter the Value of PAN Number");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text57")==""){
+						alert("Enter the Value of Particular");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text60")==""){
+						alert("Enter the Value of Qty/Size");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text61")==""){
+						alert("Enter the Value of Rate");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text62")==""){
+						alert("Enter the Value of Amount");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("totaltaxableamt")==""){
+						alert("Enter the Value of Total Taxable Amount");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("totalbillamt")==""){
+						alert("Enter the Value of Total Bill Amount");
+					}
+					else{
 					com.newgen.omniforms.formviewer.setNGValue("invoicenumber",com.newgen.omniforms.formviewer.getNGValue("Text_inv3"));
 					com.newgen.omniforms.formviewer.setNGValue("invoicedate",com.newgen.omniforms.formviewer.getNGValue("Date_inv3"));
 					com.newgen.omniforms.formviewer.setNGValue("mobilenumber",com.newgen.omniforms.formviewer.getNGValue("Text_mob2"));
@@ -345,10 +419,36 @@ function getsetFieldValue()
 					com.newgen.omniforms.formviewer.setNGValue("wclgstin",com.newgen.omniforms.formviewer.getNGValue("Text_wgstin3"));
 					com.newgen.omniforms.formviewer.setNGValue("servicegiveninstate",com.newgen.omniforms.formviewer.getNGValue("Drop_ss2"));
 					com.newgen.omniforms.formviewer.setNGValue("placeofsupply",com.newgen.omniforms.formviewer.getNGValue("Text_splace2"));
+					}
 					break;
 					
 					case 'Travel Desk and Company Expenses Reimbursement':
 					console.log("inside process type 6");
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_inv4")==""){
+						alert("Enter the Value of Invoice Number");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Date_inv4")==""){
+						alert("Enter the Value of Invoice Date");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_pan3")==""){
+						alert("Enter the Value of PAN Number");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Drop_ss3")==""){
+						alert("Enter the Value of State");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_wgstin4")==""){
+						alert("Enter the Value of WCL GSTIN");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_vgstin4")==""){
+						alert("Enter the Value of Vendor GSTIN");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("Text_splace3")==""){
+						alert("Enter the Value of Place of Supply");
+					}
+					if(com.newgen.omniforms.formviewer.getNGValue("sachsn")==""){
+						alert("Enter the Value of SAC/HSN");
+					}
+					else{
 					com.newgen.omniforms.formviewer.setNGValue("invoicenumber",com.newgen.omniforms.formviewer.getNGValue("Text_inv4"));
 					com.newgen.omniforms.formviewer.setNGValue("invoicedate",com.newgen.omniforms.formviewer.getNGValue("Date_inv4"));
 					com.newgen.omniforms.formviewer.setNGValue("mobilenumber",com.newgen.omniforms.formviewer.getNGValue("Text_mob3"));
@@ -360,7 +460,7 @@ function getsetFieldValue()
 					com.newgen.omniforms.formviewer.setNGValue("natureofservice",com.newgen.omniforms.formviewer.getNGValue("Text_snature2"));
 					com.newgen.omniforms.formviewer.setNGValue("servicegiveninstate",com.newgen.omniforms.formviewer.getNGValue("Drop_ss3"));
 					com.newgen.omniforms.formviewer.setNGValue("placeofsupply",com.newgen.omniforms.formviewer.getNGValue("Text_splace3"));
-					
+					}
 					break;
 					}
 }
