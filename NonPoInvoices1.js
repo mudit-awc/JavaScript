@@ -209,6 +209,11 @@ function eventDispatched_NonPoInvoices1(pId,pEvent){
 				}
 				break;
 				
+				case Text67:
+				return true;
+				break;
+				
+				
 			}
 		}
 	

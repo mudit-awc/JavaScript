@@ -1111,9 +1111,6 @@ function formPopulated()
         {
             switch(pActivityName)
             {
-				case 'ManualIntroduction':
-				console.log("hello farman");
-					com.newgen.omniforms.formviewer.setVisible("Tab2", false);
 				case 'Initiator':
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
@@ -1212,8 +1209,6 @@ function formPopulated()
 				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
 				com.newgen.omniforms.formviewer.setHeight("Frame4","231px");
 				com.newgen.omniforms.formviewer.setHeight("Frame8","165px");
-				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
-				
 				break;
 				
 				case 'Accounts':
@@ -1224,7 +1219,6 @@ function formPopulated()
 				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
 				com.newgen.omniforms.formviewer.setHeight("Frame4","231px");
 				com.newgen.omniforms.formviewer.setHeight("Frame8","165px");
-				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
 				break;
 				
 				
