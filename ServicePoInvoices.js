@@ -7,8 +7,29 @@ function eventDispatched_ServicePoInvoices(pId,pEvent){
 			switch(pEvent.srcElement.id)
             {
 				case 'Btn_Add_linedetails1':
-				console.log("Add line details 1");
-				return true;
+				//console.log("inside button click og first line details");
+						if(com.newgen.omniforms.formviewer.getNGValue("Text11")==""){
+					    com.newgen.omniforms.util.showError("","Kindly enter the value of Particular");
+						return false;
+					    }
+					    if(com.newgen.omniforms.formviewer.getNGValue("Text13")==""){
+					    	com.newgen.omniforms.util.showError("","Kindly enter the value of Period");
+						return false;
+					    }
+					    if(com.newgen.omniforms.formviewer.getNGValue("Text15")==""){
+					    	com.newgen.omniforms.util.showError("","Kindly enter the Qty/Size");
+						return false;
+					    }
+					    if(com.newgen.omniforms.formviewer.getNGValue("Text16")==""){
+					    	com.newgen.omniforms.util.showError("","Kindly enter the value of Rate");
+						return false;
+					    }
+					    if(com.newgen.omniforms.formviewer.getNGValue("Text17")==""){
+					    	com.newgen.omniforms.util.showError("","Kindly enter the value of Amount");
+						return false;
+					    }
+					
+					return true;
 			
 				case 'Btn_Delete_linedetails1':
 				return true;
@@ -17,6 +38,35 @@ function eventDispatched_ServicePoInvoices(pId,pEvent){
 				return true;
 				
 				case 'Btn_Add_linedetails2':
+					  if(com.newgen.omniforms.formviewer.getNGValue("Text18")==""){
+					  	com.newgen.omniforms.util.showError("","Kindly enter the value of Particular");
+						return false;
+					  }
+					  if(com.newgen.omniforms.formviewer.getNGValue("Text20")==""){
+					  	com.newgen.omniforms.util.showError("","Kindly enter the value of Period");
+						return false;
+					  }
+					  if(com.newgen.omniforms.formviewer.getNGValue("Text21")==""){
+						com.newgen.omniforms.util.showError("","Kindly enter the value of Package");
+						return false;
+					  }
+					  if(com.newgen.omniforms.formviewer.getNGValue("Text25")==""){
+					  	com.newgen.omniforms.util.showError("","Kindly enter the value of Edition");
+						return false;
+					  }
+					  if(com.newgen.omniforms.formviewer.getNGValue("Text23")==""){
+					  	com.newgen.omniforms.util.showError("","Kindly enter the value of Rate");
+						return false;
+					  }
+					  if(com.newgen.omniforms.formviewer.getNGValue("Text24")==""){
+					  	com.newgen.omniforms.util.showError("","Kindly enter the value of Amount");
+						return false;
+					  }
+					  if(com.newgen.omniforms.formviewer.getNGValue("Text22")==""){
+					  	com.newgen.omniforms.util.showError("","Kindly enter the Qty/Size");
+						return false;
+					  }
+				
 				return true;
 			
 				case 'Btn_Delete_linedetails2':
@@ -89,8 +139,21 @@ function eventDispatched_ServicePoInvoices(pId,pEvent){
 						
 					}
 				}
+				break;
 				case 'Text7':
-				return true;
+				let per= document.getElementById('Text7').value;
+				console.log("per value"+per);
+				   if (per ==''|| per==null){
+					  
+					  com.newgen.omniforms.formviewer.setNGValue("Text28",null);
+					  com.newgen.omniforms.util.showError("","Enter the Percentage");
+					return false;  
+					   }
+					   
+					else{
+					return true;	   
+					}
+				
 				break;
 			}
 		}
@@ -103,34 +166,20 @@ function validate_ServicePoInvoices(pEvent,activityName)
     {           
 		case 'I':
 		case 'D':
-			console.log("Introduce/Done");
-			console.log("testing");
-		
-				if(activityName=='Initiator'){
-					console.log("Initiator");
-		
+			if(activityName=='Initiator'){
 			let nameofprocess = document.getElementById('proctype').value;
 			if(nameofprocess==''||nameofprocess==null){
-				alert("Kindly select any Name of Process");
-				return false;
+				com.newgen.omniforms.util.showError("","Kindly enter the Process Name");
+						return false;
 			}
-				}
-				
+			}	
 			getsetfieldvalues();
-			console.log("new function is called");
-			return true;
 			break;
-		  
+			
 		case 'S':
-		saveFormData(); 
-		console.log("Save");
-		getsetfieldvalues()
-		console.log("again new function is called");
-		return true;
-		break;
-		
+			break;		
 	}
-return true;
+//return true;
 }
 
 function getsetfieldvalues(){
@@ -145,36 +194,27 @@ function getsetfieldvalues(){
 						case 'Branding Retailer Meeting':
 						case 'Technical Item':
 						case 'Technical Printing':
-						console.log("inside first case");
+							
 						if(com.newgen.omniforms.formviewer.getNGValue("pannumber")==""){
-						alert("Enter the Value of PAN Number");
+						com.newgen.omniforms.util.showError("","Kindly enter the PAN Number");
+						return false;
 						}
 						if(com.newgen.omniforms.formviewer.getNGValue("invoicenumber")==""){
-						alert("Enter the Value of Invoice Number ");
-					    }
+						com.newgen.omniforms.util.showError("","Kindly enter the Invoice Number");
+						return false;
+						}
 					    if(com.newgen.omniforms.formviewer.getNGValue("invoicedate")==""){
-					    	alert("Enter the Value of Invoice Date");
+						com.newgen.omniforms.util.showError("","Kindly enter the Invoice Date");
+						return false;
 					    }
-					    if(com.newgen.omniforms.formviewer.getNGValue("Text11")==""){
-					    	alert("Enter the Value of Particular ");
-					    }
-					    if(com.newgen.omniforms.formviewer.getNGValue("Text13")==""){
-					    	alert("Enter the Value of Period");
-					    }
-					    if(com.newgen.omniforms.formviewer.getNGValue("Text15")==""){
-					    	alert("Enter the Value of Qty/Size");
-					    }
-					    if(com.newgen.omniforms.formviewer.getNGValue("Text16")==""){
-					    	alert("Enter the Value of Rate");
-					    }
-					    if(com.newgen.omniforms.formviewer.getNGValue("Text17")==""){
-					    	alert("Enter the Value of Amount");
-					    }
+					  
 					    if(com.newgen.omniforms.formviewer.getNGValue("totaltaxableamount")==""){
-					    	alert("Enter the Value of Total Taxable Amount ");
+					    com.newgen.omniforms.util.showError("","Kindly enter the value of Total Taxable Amount");
+						return false;
 					    }
 					    if(com.newgen.omniforms.formviewer.getNGValue("totalbillamount")==""){
-					    	alert("Enter the Value of Total Bill Amount");
+					    com.newgen.omniforms.util.showError("","Kindly enter the value of Total Bill Amount");
+						return false;
 					    }
 						break;
 						
@@ -183,48 +223,30 @@ function getsetfieldvalues(){
 					  case 'Branding Sponsorship':
 					  case 'Branding Dealer Meeting':
 					  if(com.newgen.omniforms.formviewer.getNGValue("invoicenumber")==""){
-					  	alert("Enter the Value of Invoice Number ");
+					  	com.newgen.omniforms.util.showError("","Kindly enter the Invoice Number");
+						return false;
 					  }
 						if(com.newgen.omniforms.formviewer.getNGValue("invoicedate")==""){
-					  	alert("Enter the Value of Invoice Date");
+					  	com.newgen.omniforms.util.showError("","Kindly enter the Invoice Date");
+						return false;
 					  }
 					   if(com.newgen.omniforms.formviewer.getNGValue("pannumber")==""){
-					  	alert("Enter the Value of PAN Number ");
+					  	com.newgen.omniforms.util.showError("","Kindly enter the PAN Number");
+						return false;
 					  }
-					 if(com.newgen.omniforms.formviewer.getNGValue("Text18")==""){
-					  	alert("Enter the Value of Particular");
-					  }
-					  if(com.newgen.omniforms.formviewer.getNGValue("Text20")==""){
-					  	alert("Enter the Value of Period ");
-					  }
-					  if(com.newgen.omniforms.formviewer.getNGValue("Text21")==""){
-					  	alert("Enter the Value of Package");
-					  }
-					  if(com.newgen.omniforms.formviewer.getNGValue("Text25")==""){
-					  	alert("Enter the Value of Edition");
-					  }
-					  if(com.newgen.omniforms.formviewer.getNGValue("Text23")==""){
-					  	alert("Enter the Value of Rate ");
-					  }
-					  if(com.newgen.omniforms.formviewer.getNGValue("Text24")==""){
-					  	alert("Enter the Value of Amount");
-					  }
-					  if(com.newgen.omniforms.formviewer.getNGValue("Text22")==""){
-					  	alert("Enter the Value of Qty/Size ");
-					  }
+					 
 					  if(com.newgen.omniforms.formviewer.getNGValue("totaltaxableamount")==""){
-					  	alert("Enter the Value of Total Taxable Amount ");
+					  	com.newgen.omniforms.util.showError("","Kindly enter the value of Total Taxable Amount");
+						return false;
 					  }
 					  if(com.newgen.omniforms.formviewer.getNGValue("totalbillamount")==""){
-					  	alert("Enter the Value of Total Bill Amount");
+						com.newgen.omniforms.util.showError("","Kindly enter the value of Total Bill Amount");
+						return false;
 					  }
 					  
 					  break;
 					  	
-					  }
-				      
-				      
-		              
+					}              
 	}                 
 	                  
  
