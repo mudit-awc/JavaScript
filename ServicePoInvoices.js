@@ -175,28 +175,49 @@ function validate_ServicePoInvoices(pEvent,activityName)
 			}	
 			var proctype_value = document.getElementById('proctype').value;
 			if(proctype_value == ("Branding Out of home"||"Branding Relationship management"||"Branding Shop"||"Branding Tour Scheme"||"Branding Retailer Meeting"||"Technical Item"||"Technical Printing")){
-			if(com.newgen.omniforms.formviewer.getNGValue("Text_pan1")==""){
-			com.newgen.omniforms.util.showError("","Kindly enter the PAN Number");
-			return false;
+			    if(com.newgen.omniforms.formviewer.getNGValue("Text_pan1")==""){
+			    com.newgen.omniforms.util.showError("","Kindly enter the PAN Number");
+			    return false;
+			    }
+			    if(com.newgen.omniforms.formviewer.getNGValue("invoicenumber")==""){
+			    com.newgen.omniforms.util.showError("","Kindly enter the Invoice Number");
+			    return false;
+			    }
+			    if(com.newgen.omniforms.formviewer.getNGValue("invoicedate")==""){
+			    com.newgen.omniforms.util.showError("","Kindly enter the Invoice Date");
+			    return false;
+			    }
+			    if(com.newgen.omniforms.formviewer.getNGValue("totaltaxableamount")==""){
+			    com.newgen.omniforms.util.showError("","Kindly enter the value of Total Taxable Amount");
+			    return false;
+			    }
+			    if(com.newgen.omniforms.formviewer.getNGValue("totalbillamount")==""){
+			    com.newgen.omniforms.util.showError("","Kindly enter the value of Total Bill Amount");
+			    return false;
+			    }
 			}
-			if(com.newgen.omniforms.formviewer.getNGValue("invoicenumber")==""){
-			com.newgen.omniforms.util.showError("","Kindly enter the Invoice Number");
-			return false;
-			}
-			if(com.newgen.omniforms.formviewer.getNGValue("invoicedate")==""){
-			com.newgen.omniforms.util.showError("","Kindly enter the Invoice Date");
-			return false;
-			}
-			if(com.newgen.omniforms.formviewer.getNGValue("totaltaxableamount")==""){
-			com.newgen.omniforms.util.showError("","Kindly enter the value of Total Taxable Amount");
-			return false;
-			}
-			if(com.newgen.omniforms.formviewer.getNGValue("totalbillamount")==""){
-			com.newgen.omniforms.util.showError("","Kindly enter the value of Total Bill Amount");
-			return false;
-			}
-			}
-			//getsetfieldvalues();
+			else{
+				if(com.newgen.omniforms.formviewer.getNGValue("invoicenumber")==""){
+				com.newgen.omniforms.util.showError("","Kindly enter the Invoice Number");
+				return false;
+					}
+				if(com.newgen.omniforms.formviewer.getNGValue("invoicedate")==""){
+				com.newgen.omniforms.util.showError("","Kindly enter the Invoice Date");
+				return false;
+					}
+				if(com.newgen.omniforms.formviewer.getNGValue("pannumber")==""){
+				com.newgen.omniforms.util.showError("","Kindly enter the PAN Number");
+				return false;
+					}	
+				if(com.newgen.omniforms.formviewer.getNGValue("totaltaxableamount")==""){
+				com.newgen.omniforms.util.showError("","Kindly enter the value of Total Taxable Amount");
+				return false;
+					}
+				if(com.newgen.omniforms.formviewer.getNGValue("totalbillamount")==""){
+				com.newgen.omniforms.util.showError("","Kindly enter the value of Total Bill Amount");
+				return false;
+					}
+				}
 			break;
 			
 		case 'S':
@@ -205,72 +226,7 @@ function validate_ServicePoInvoices(pEvent,activityName)
 //return true;
 }
 
-function getsetfieldvalues(){
-	
-					console.log("inside proctype of service po invoices");
-					switch(document.getElementById('proctype').value)
-					{
-						case 'Branding Out of home':
-						case 'Branding Relationship management':
-						case 'Branding Shop':
-						case 'Branding Tour Scheme':
-						case 'Branding Retailer Meeting':
-						case 'Technical Item':
-						case 'Technical Printing':
-							
-						if(com.newgen.omniforms.formviewer.getNGValue("pannumber")==""){
-						com.newgen.omniforms.util.showError("","Kindly enter the PAN Number");
-						return false;
-						}
-						if(com.newgen.omniforms.formviewer.getNGValue("invoicenumber")==""){
-						com.newgen.omniforms.util.showError("","Kindly enter the Invoice Number");
-						return false;
-						}
-					    if(com.newgen.omniforms.formviewer.getNGValue("invoicedate")==""){
-						com.newgen.omniforms.util.showError("","Kindly enter the Invoice Date");
-						return false;
-					    }
-					  
-					    if(com.newgen.omniforms.formviewer.getNGValue("totaltaxableamount")==""){
-					    com.newgen.omniforms.util.showError("","Kindly enter the value of Total Taxable Amount");
-						return false;
-					    }
-					    if(com.newgen.omniforms.formviewer.getNGValue("totalbillamount")==""){
-					    com.newgen.omniforms.util.showError("","Kindly enter the value of Total Bill Amount");
-						return false;
-					    }
-						break;
-						
-					  case 'Branding Branding Expenses':
-					  case 'Branding Mass Advertisement':
-					  case 'Branding Sponsorship':
-					  case 'Branding Dealer Meeting':
-					  if(com.newgen.omniforms.formviewer.getNGValue("invoicenumber")==""){
-					  	com.newgen.omniforms.util.showError("","Kindly enter the Invoice Number");
-						return false;
-					  }
-						if(com.newgen.omniforms.formviewer.getNGValue("invoicedate")==""){
-					  	com.newgen.omniforms.util.showError("","Kindly enter the Invoice Date");
-						return false;
-					  }
-					   if(com.newgen.omniforms.formviewer.getNGValue("pannumber")==""){
-					  	com.newgen.omniforms.util.showError("","Kindly enter the PAN Number");
-						return false;
-					  }
-					 
-					  if(com.newgen.omniforms.formviewer.getNGValue("totaltaxableamount")==""){
-					  	com.newgen.omniforms.util.showError("","Kindly enter the value of Total Taxable Amount");
-						return false;
-					  }
-					  if(com.newgen.omniforms.formviewer.getNGValue("totalbillamount")==""){
-						com.newgen.omniforms.util.showError("","Kindly enter the value of Total Bill Amount");
-						return false;
-					  }
-					  
-					  break;
-					  	
-					}              
-	}                 
+         
 	                  
  
 		
