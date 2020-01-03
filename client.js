@@ -1111,6 +1111,10 @@ function formPopulated()
         {
             switch(pActivityName)
             {
+				case 'ManualIntroduction':
+				console.log("hello farman");
+					com.newgen.omniforms.formviewer.setVisible("Tab2", false);
+						com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","810px");
 				case 'Initiator':
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
@@ -1118,16 +1122,22 @@ function formPopulated()
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);
 				break;
 				
 				case 'StoreUser':
-				let grnnumber = document.getElementById('grnnumber').value;
+				var grnnumber = document.getElementById('grnnumber').value;
+				var purchasestatus = document.getElementById('purchasestatus').value;
+				var previousactivity = document.getElementById('previousactivity').value;
+				
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);
 				
+				if(previousactivity=='Initiator'){
 				if(grnnumber==''){
 					com.newgen.omniforms.formviewer.setVisible("Btn_CancelGRN", false);
 					com.newgen.omniforms.formviewer.setVisible("Btn_GenerateGRN", true);
@@ -1136,6 +1146,14 @@ function formPopulated()
 					com.newgen.omniforms.formviewer.setVisible("Btn_CancelGRN", true);
 					com.newgen.omniforms.formviewer.setVisible("Btn_GenerateGRN", false);
 				}
+				}
+				
+				if(previousactivity=='PurchaseUser'){
+					
+				}
+				
+				
+				
 				break;
 				
 				case 'QualityUser':
@@ -1144,11 +1162,9 @@ function formPopulated()
 				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
-				
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
-				
-				
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);				
 				com.newgen.omniforms.formviewer.setVisible("Btn_CancelGRN", false);
 				com.newgen.omniforms.formviewer.setVisible("Btn_GenerateGRN", false);
 				com.newgen.omniforms.formviewer.setVisible("Frame4", false);
@@ -1157,7 +1173,7 @@ function formPopulated()
 				com.newgen.omniforms.formviewer.setTop("Label40","98px");	
 				com.newgen.omniforms.formviewer.setTop("storeremarks","115px");	
 			
-				let itemTypeFlag = document.getElementById('itemtypeflag').value;
+				var itemTypeFlag = document.getElementById('itemtypeflag').value;
 				if(itemTypeFlag=='PP Bags'){
 					com.newgen.omniforms.formviewer.setVisible("Frame6", false);
 					com.newgen.omniforms.formviewer.setTop("Label41","35px");
@@ -1181,6 +1197,29 @@ function formPopulated()
 				else{
 				
 				}
+				break;
+				
+				case 'PurchaseUser':
+				console.log("hi from purchase user");
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 0 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , true);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);
+				var previousactivity = document.getElementById('previousactivity').value; 
+				console.log("previousactivity : "+previousactivity);
+				if(previousactivity=='Initiator'){
+					console.log("inside pu flag farman fromini");
+					//com.newgen.omniforms.formviewer.clear("Combo7");
+					com.newgen.omniforms.formviewer.addItem("purchasestatus","Hold","Hold");
+					com.newgen.omniforms.formviewer.addItem("purchasestatus","Exception Cleared","Exception Cleared");
+				}
+				if(previousactivity=='QualityUser'){
+					console.log("inside pu flag-2 farman");
+					com.newgen.omniforms.formviewer.addItem("purchasestatus","Replacement/Exchange","Replacement/Exchange");
+					com.newgen.omniforms.formviewer.addItem("purchasestatus","Purchase Return","Purchase Return");
+				}
 				
 				
 				break;
@@ -1192,10 +1231,38 @@ function formPopulated()
 			switch(pActivityName)
             {
 				case 'Introduction':
-				case 'Initiator':
 				com.newgen.omniforms.formviewer.setVisible("Label33", false);
 				com.newgen.omniforms.formviewer.setVisible("filestatus", false);
 				break; 
+				
+				case 'Initiator':
+				com.newgen.omniforms.formviewer.setVisible("Label33", false);
+				com.newgen.omniforms.formviewer.setVisible("filestatus", false);
+				break;
+
+				case 'Approver':
+				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
+				com.newgen.omniforms.formviewer.setEnabled("Frame4",false);
+				com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
+				com.newgen.omniforms.formviewer.setEnabled("Frame8",false);
+				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
+				com.newgen.omniforms.formviewer.setHeight("Frame4","231px");
+				com.newgen.omniforms.formviewer.setHeight("Frame8","165px");
+				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
+				
+				break;
+				
+				case 'Accounts':
+				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
+				com.newgen.omniforms.formviewer.setEnabled("Frame4",false);
+				com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
+				com.newgen.omniforms.formviewer.setEnabled("Frame8",false);
+				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
+				com.newgen.omniforms.formviewer.setHeight("Frame4","231px");
+				com.newgen.omniforms.formviewer.setHeight("Frame8","165px");
+				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
+				break;
+				
 				
 			}
 			let processName = document.getElementById('proctype').value;
@@ -1215,6 +1282,21 @@ function formPopulated()
 						com.newgen.omniforms.formviewer.setVisible("sachsn", false);
 						com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", true);
 						com.newgen.omniforms.formviewer.setVisible("Frame8", true);
+						{
+					switch(pActivityName)
+					{
+					case 'Approver':
+					console.log("activity inside process");
+					com.newgen.omniforms.formviewer.setTop("Frame8","685px");
+					com.newgen.omniforms.formviewer.setHeight("FRM_ServicePoInvoices","880px");
+					break;
+					
+					case 'Accounts':
+					com.newgen.omniforms.formviewer.setTop("Frame8","685px");
+					com.newgen.omniforms.formviewer.setHeight("FRM_ServicePoInvoices","880px");
+					break;
+					}
+					}
 						//com.newgen.omniforms.formviewer.setTop("LINE_DETAILS","440px");
 						//com.newgen.omniforms.formviewer.setTop("Frame8","842px");
 						return true;
@@ -1232,6 +1314,21 @@ function formPopulated()
 						com.newgen.omniforms.formviewer.setVisible("Frame8", true);
 						//com.newgen.omniforms.formviewer.setTop("Frame4","440px");
 						//com.newgen.omniforms.formviewer.setTop("Frame8","842px");
+						{
+					switch(pActivityName)
+					{
+					case 'Approver':
+					console.log("activity inside process");
+					com.newgen.omniforms.formviewer.setTop("Frame8","676px");
+					com.newgen.omniforms.formviewer.setHeight("FRM_ServicePoInvoices","852px");
+					break;
+					
+					case 'Accounts':
+					com.newgen.omniforms.formviewer.setTop("Frame8","676px");
+					com.newgen.omniforms.formviewer.setHeight("FRM_ServicePoInvoices","852px");
+					break;
+					}
+					}
 						return true;
 						
 						default:
@@ -1664,18 +1761,18 @@ function validateForm(pEvent){
 		break;
 		
 		 case 'ServicePoInvoices':
-        {
+        
 			console.log("Activityname : " + activityName);
-            switch(activityName)
+            //switch(activityName)
             {
-				case 'Introduction':
-				case 'Initiator':
-				case 'StoreUser':
-				console.log("farman");
+				//case 'Introduction':
+				//case 'Initiator':
+				//case 'StoreUser':
+				console.log("inside validate_ServicePoInvoices");
 				  return validate_ServicePoInvoices(pEvent,activityName);
-				  
+				 
 			}
-		}
+		
 		break;
 		
 		 case 'NonPoInvoices1':
