@@ -91,13 +91,11 @@ function validate_SupplyPoInvoices(pEvent,activityName)
 					return false;
 				}
 			}
-				
-			
-			return true;
+		return true;
 		  
 		case 'S':
-		console.log("Save");
+			console.log("Save");
 			return true;		
 	}
-return true;
+	return true;
 }

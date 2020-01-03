@@ -301,10 +301,10 @@ function eventDispatched_NonPoInvoices1(pId,pEvent){
 				return false;
 			}
 			getsetFieldValue();
-			break;
+			//break;
 		
 		case 'S':
-		break;
+			//break;
 	}
 	return true;	
 }
@@ -359,7 +359,7 @@ function getsetFieldValue()
 					com.newgen.omniforms.formviewer.setNGValue("emailid",com.newgen.omniforms.formviewer.getNGValue("Text_email1"));
 					com.newgen.omniforms.formviewer.setNGValue("vendorgstin",com.newgen.omniforms.formviewer.getNGValue("Text_vgstin1"));
 					com.newgen.omniforms.formviewer.setNGValue("wclgstin",com.newgen.omniforms.formviewer.getNGValue("Text_wgstin1"));
-					com.newgen.omniforms.formviewer.setNGValue("natureofservice",com.newgen.omniforms.formviewer.getNGValue("Text_snature1"));
+					com.newgen.omniforms.formviewer.setNGValue("natureofservice",com.newgen.omniforms.formviewer.getNGValue("Text_snature1));
 					com.newgen.omniforms.formviewer.setNGValue("servicegiveninstate",com.newgen.omniforms.formviewer.getNGValue("Drop_ss1"));
 					com.newgen.omniforms.formviewer.setNGValue("placeofsupply",com.newgen.omniforms.formviewer.getNGValue("Text_splace1"));
 					}
