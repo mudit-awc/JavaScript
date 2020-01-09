@@ -1114,23 +1114,36 @@ function formPopulated()
 				case 'ManualIntroduction':
 				console.log("hello farman");
 					com.newgen.omniforms.formviewer.setVisible("Tab2", false);
+					com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","810px");
 				case 'Initiator':
+				com.newgen.omniforms.formviewer.setHeight("Frame1","995px"); 
+				com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","1000px");
+				com.newgen.omniforms.formviewer.setHeight("Tab2","177px"); 
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);
 				break;
 				
 				case 'StoreUser':
+				com.newgen.omniforms.formviewer.setHeight("Frame1","1240px"); 
+				com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","1245px");
+				com.newgen.omniforms.formviewer.setHeight("Tab2","435px");
 				let grnnumber = document.getElementById('grnnumber').value;
+				let purchasestatus = document.getElementById('purchasestatus').value;
+				let previousactivity = document.getElementById('previousactivity').value;
+				
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);
 				
+				if(previousactivity=='Initiator'){
 				if(grnnumber==''){
 					com.newgen.omniforms.formviewer.setVisible("Btn_CancelGRN", false);
 					com.newgen.omniforms.formviewer.setVisible("Btn_GenerateGRN", true);
@@ -1139,19 +1152,23 @@ function formPopulated()
 					com.newgen.omniforms.formviewer.setVisible("Btn_CancelGRN", true);
 					com.newgen.omniforms.formviewer.setVisible("Btn_GenerateGRN", false);
 				}
+				}
+				
+				
+				
+				
+				
 				break;
 				
 				case 'QualityUser':
-				com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","1105px");
-				com.newgen.omniforms.formviewer.setHeight("Frame1","1102px");
+				//com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","1105px");
+			//	com.newgen.omniforms.formviewer.setHeight("Frame1","1132px");  //1102px is orignal
 				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
-				
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
-				
-				
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);				
 				com.newgen.omniforms.formviewer.setVisible("Btn_CancelGRN", false);
 				com.newgen.omniforms.formviewer.setVisible("Btn_GenerateGRN", false);
 				com.newgen.omniforms.formviewer.setVisible("Frame4", false);
@@ -1161,32 +1178,87 @@ function formPopulated()
 				com.newgen.omniforms.formviewer.setTop("storeremarks","115px");	
 			
 				let itemTypeFlag = document.getElementById('itemtypeflag').value;
+				
 				if(itemTypeFlag=='PP Bags'){
+						com.newgen.omniforms.formviewer.setHeight("Frame1","990px"); 
+						com.newgen.omniforms.formviewer.setHeight("Tab2","177px"); 
+						com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","995px");
 					com.newgen.omniforms.formviewer.setVisible("Frame6", false);
 					com.newgen.omniforms.formviewer.setTop("Label41","35px");
-					com.newgen.omniforms.formviewer.setTop("Label42","35px");
 					com.newgen.omniforms.formviewer.setTop("qualitystatus","54px");
-					com.newgen.omniforms.formviewer.setTop("qualityremarks","54px");
 					com.newgen.omniforms.formviewer.setVisible("Quality_itemselect", false); 
+					
 					com.newgen.omniforms.formviewer.setVisible("Label23", false);
+					com.newgen.omniforms.formviewer.setVisible("Label42", true);
+					com.newgen.omniforms.formviewer.setVisible("qualityremarks", true);
+					com.newgen.omniforms.formviewer.setTop("Label42", "100px");
+					com.newgen.omniforms.formviewer.setTop("qualityremarks", "120px");
 				}else if(itemTypeFlag=='Raw Material'){
+						com.newgen.omniforms.formviewer.setHeight("Frame1","1200px"); 
+						com.newgen.omniforms.formviewer.setHeight("Tab2","377px"); 
+						com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","1205px");
 					com.newgen.omniforms.formviewer.setVisible("Frame6", false);
 					com.newgen.omniforms.formviewer.setVisible("Quality_itemselect", false); 
 					com.newgen.omniforms.formviewer.setVisible("Label23", false);
 					com.newgen.omniforms.formviewer.setVisible("Frame7", true);
 					com.newgen.omniforms.formviewer.setTop("Frame7","55px");
+				
 				}else if(itemTypeFlag=='Quarantine'){
+						com.newgen.omniforms.formviewer.setHeight("Frame1","1200px"); 
+						com.newgen.omniforms.formviewer.setHeight("Tab2","377px"); 
+						com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","1205px");
 				com.newgen.omniforms.formviewer.setVisible("Frame7", false);
 				com.newgen.omniforms.formviewer.setVisible("Quality_itemselect", true); 
 					com.newgen.omniforms.formviewer.setVisible("Label23", true);
 					com.newgen.omniforms.formviewer.setVisible("Frame6", true);
+					
+					com.newgen.omniforms.formviewer.setVisible("Label42", true);
+					com.newgen.omniforms.formviewer.setVisible("qualityremarks", true);
+					com.newgen.omniforms.formviewer.setTop("Label42", "301px");
+					com.newgen.omniforms.formviewer.setTop("qualityremarks", "321px");
+					
 				}	
 				else{
 				
 				}
+				break;
+				
+				case 'PurchaseUser':
+				console.log("hi from purchase user");
+				com.newgen.omniforms.formviewer.setHeight("Frame1","995px"); 
+				com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","1000px");
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 0 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , true);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);
+				let previousactivity1 = document.getElementById('previousactivity').value; 
+				console.log("previousactivity : "+previousactivity1);
+				if(previousactivity1=='Initiator'){
+					com.newgen.omniforms.formviewer.addItem("purchasestatus","Hold","Hold");
+					com.newgen.omniforms.formviewer.addItem("purchasestatus","Exception Cleared","Exception Cleared");
+				}
+				if(previousactivity1=='QualityUser'){
+					com.newgen.omniforms.formviewer.addItem("purchasestatus","Replacement/Exchange","Replacement/Exchange");
+					com.newgen.omniforms.formviewer.addItem("purchasestatus","Purchase Return","Purchase Return");
+				}
 				
 				
 				break;
+				
+				case 'Accounts':
+				com.newgen.omniforms.formviewer.setHeight("Frame1","990px"); 
+				com.newgen.omniforms.formviewer.setHeight("Tab2","177px"); 
+				com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","995px");
+				break;
+				
+				case 'History':
+				com.newgen.omniforms.formviewer.setHeight("Frame1","995px"); 
+				com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","1000px");
+				com.newgen.omniforms.formviewer.setHeight("Tab2","177px"); 
 			}
 			break;
 		}
@@ -1207,9 +1279,9 @@ function formPopulated()
 				case 'Approver':
 				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
 				com.newgen.omniforms.formviewer.setEnabled("Frame4",false);
-				com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
+				//com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
 				com.newgen.omniforms.formviewer.setEnabled("Frame8",false);
-				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
+				//com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
 				com.newgen.omniforms.formviewer.setHeight("Frame4","231px");
 				com.newgen.omniforms.formviewer.setHeight("Frame8","165px");
 				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
@@ -1219,9 +1291,9 @@ function formPopulated()
 				case 'Accounts':
 				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
 				com.newgen.omniforms.formviewer.setEnabled("Frame4",false);
-				com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
+				//com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
 				com.newgen.omniforms.formviewer.setEnabled("Frame8",false);
-				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
+				//com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
 				com.newgen.omniforms.formviewer.setHeight("Frame4","231px");
 				com.newgen.omniforms.formviewer.setHeight("Frame8","165px");
 				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
@@ -1232,7 +1304,7 @@ function formPopulated()
 			let processName = document.getElementById('proctype').value;
 			switch(processName)
 			{
-						case 'Branding Out of home':
+						/*case 'Branding Out of home':
 						case 'Branding Relationship management':
 						case 'Branding Shop':
 						case 'Branding Tour Scheme':
@@ -1264,16 +1336,22 @@ function formPopulated()
 						//com.newgen.omniforms.formviewer.setTop("LINE_DETAILS","440px");
 						//com.newgen.omniforms.formviewer.setTop("Frame8","842px");
 						return true;
+						*/
 						
-						
-						case 'Branding Branding Expenses':
-						case 'Branding Mass Advertisement':
-						case 'Branding Sponsorship':
-						case 'Branding Dealer Meeting':
+						case 'Branding - General':
+						case 'Branding – Out of home':
+						case 'Technical – PO':
+						case 'Project/Plant/Non Plant Operations':
+						case 'Tour Bill':
+						case 'Kind Scheme (Retailor Meeting)':
+						case 'Kind Scheme (Gold & Silver)':
+						case 'Branding –Out of home (Vehicle Painting At NBH)':
+						case 'Consultant for Marketing Development':
+						case 'Mobile Van Technical PO':
 						com.newgen.omniforms.formviewer.setVisible("Frame2", true);
-						com.newgen.omniforms.formviewer.setVisible("Label7", true);
-						com.newgen.omniforms.formviewer.setVisible("sachsn", true);
-						com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", false);
+						//com.newgen.omniforms.formviewer.setVisible("Label7", true);
+						//com.newgen.omniforms.formviewer.setVisible("sachsn", true);
+						//com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", false);
 						com.newgen.omniforms.formviewer.setVisible("Frame4", true);
 						com.newgen.omniforms.formviewer.setVisible("Frame8", true);
 						//com.newgen.omniforms.formviewer.setTop("Frame4","440px");
@@ -1717,6 +1795,7 @@ function validateForm(pEvent){
 				case 'ManualIntroduction':
 				case 'Initiator':
 				case 'StoreUser':
+				case 'PurchaseUser':
 				console.log("Inside pName Introduction switch");
 				  return validate_SupplyPoInvoices(pEvent,activityName);
 				  
@@ -2903,4 +2982,13 @@ function hideAnnotationForWorkstep(strprocessname,stractivityName,strQueueName){
 
 function WDReassignClick(){
     return true;
+}
+function eventTabClick(tabName,sheetIndex)
+{
+	var pname=window.parent.strprocessname;
+	var activityName=window.parent.stractivityName;
+	if(pname=='SupplyPoInvoices')
+    {
+		return tab_clicked_WonderCementAP(tabName,sheetIndex);
+	}
 }
