@@ -70,12 +70,18 @@
                 Bug 73882       29/11/2017
                 Bug 74700       08/01/2018
                 Bug 80213       19/09/2018
+				Bug 87252		11/10/2019
+                Bug 87724       04/11/2019
+				Bug 87680       05/11/2019							  
+                Bug 89071       27/12/2019
 */
 
 try{
 window.document.write("<script src="+"/webdesktop/resources/scripts/SupplyPoInvoices.js"+"></script>");
-window.document.write("<script src="+"/webdesktop/resources/scripts/NonPoInvoices1.js"+"></script>");
-window.document.write("<script src="+"/webdesktop/resources/scripts/ServicePoInvoices.js"+"></script>");
+window.document.write("<script src="+"/webdesktop/resources/scripts/NonPoInvoice.js"+"></script>");
+window.document.write("<script src="+"/webdesktop/resources/scripts/ServicePoInvoice.js"+"></script>");
+window.document.write("<script src="+"/webdesktop/resources/scripts/RABill.js"+"></script>");
+window.document.write("<script src="+"/webdesktop/resources/scripts/OutwardFreight.js"+"></script>");
 }
 
 catch(e){
@@ -286,6 +292,13 @@ function NewClick()
 
 function WIPropertiesClick()
 {
+    //  var left=parseInt(ScreenWidth/2)-parseInt(600/2);
+  //   var top=parseInt(ScreenHeight/2)-parseInt(410/2);
+//	var wFeatures = 'height='+550+',width='+600+',resizable=0,status=1,scrollbars=auto,top='+top+',left='+left;
+ //    var url ="https://www.goibibo.com";   // url      
+ //    var name = "CustomWin"; // name
+ //  openNewWindow(url,name,wFeatures, true,"Ext1","Ext2","Ext3","Ext4","");
+    
 	return true;
 }
 
@@ -331,7 +344,7 @@ function CommentWiClick(){
               return true;
 }
 
-function getUploadMaxLength()
+function getUploadMaxLength(strprocessname, stractivityName, docType)
 {
     /*
          strprocessname :   Name of the Current Process
@@ -524,7 +537,7 @@ function customValidation(opt){
     //In case of Save opt="S" and for Done and Introduce opt="D"   
    return true;
 }
-function enableWLNew(queueName){    
+function enableWLNew(queueName,UserName){    
 
   return true;
 }
@@ -591,7 +604,7 @@ function UnassignClick(){
 
  return true;   
 }
-function LockForMe(){
+function LockForMePreHook(){
 
  return true;   
 }
@@ -661,19 +674,19 @@ function enableRelease(strSelQueueName,strFrom){
 
    return   true;
 }
-
+/*
 function enableDelete(strSelQueueName,strFrom){  
    
-    /*
+    
          strSelQueueName: selected QueueName (in case of search it is blank)
          strFrom        : W or F or S
          W              : Workitem list form any queue
          F              : Workitem list form Filter
          S              : Workitem list form Search
-    */
+    
 
    return   true;
-}
+}*/
 function customFieldForCropping(){ 
   // return the name of string type array variable for displaying combo for it on crop document page.
  return ""; 
@@ -702,12 +715,40 @@ function docAndFormAppletHeight(strprocessname,stractivityName){
   // strDocAndFormHeight="<DocHeight>"+strDocHeight+"</DocHeight><FormHeight>"+strFormHeight+"</FormHeight>";
   return strDocAndFormHeight;
 }
-function enableDone(strSelQueueName,strFromSearch){    
+function enableDone(strSelQueueName,strFromSearch,bDone)
+{
+/*    if(strFromSearch=='true'){
+        var arrSeleQueueName=strSelQueueName.split(",");
+        for(var i=0;i<arrSeleQueueName.length;i++){
+          if selected workitem is assigned to someone else, it will give value of queue name as ''
+          if selected workitem is assigned to you, it will give value of queue name as My Queue
+          if selected workitem is unassigned, it will give the original queue name 
+            if(arrSeleQueueName[i]==''){
+                return false;
+            }
+        }
+    } else{
+          if strFromSearch is false, strSelQueueName will return a single queue name as before           
+    }*/
     return true;
 }
 
-function enableInitiate(strSelQueueName,strFromSearch){
- return true;
+function enableInitiate(strSelQueueName,strFromSearch,bInitiate){
+    
+/*     if(strFromSearch=='true'){
+        var arrSeleQueueName=strSelQueueName.split(",");
+        for(var i=0;i<arrSeleQueueName.length;i++){
+          if selected workitem is assigned to someone else, it will give value of queue name as ''
+          if selected workitem is assigned to you, it will give value of queue name as My Queue
+          if selected workitem is unassigned, it will give the original queue name 
+            if(arrSeleQueueName[i]==''){
+                return false;
+            }
+        }
+    } else{
+          if strFromSearch is false, strSelQueueName will return a single queue name as before           
+    }*/
+    return true;
 
 }
 
@@ -807,26 +848,29 @@ function getDoneInformation(){
             var wiClicked=document.getElementById(checkboxId+iCount);
             if(wiClicked.checked){
                     
-                var jsonOutput=document.getElementById("frmworkitemlist:hidWIJson"+(iCount+1)).innerHTML;
-                jsonOutput= eval("("+jsonOutput+")");
-                var arrobjJsonOutput= jsonOutput.Outputs;
-                for(var i=0;i<arrobjJsonOutput.length;i++){
-                    var outputJson=arrobjJsonOutput[i];
-                    var objJson=outputJson.Output;
-                    var activityName,processName,processInstanceId;
-                    if(objJson.Name=='ActivityName'){
+                var jsonOutput=document.getElementById("frmworkitemlist:hjn"+(iCount+1)).innerHTML;
+                //jsonOutput= eval("("+jsonOutput+")");
+                jsonOutput = jsonOutput.split(SEPERATOR1);
+                var arrobjJsonOutput= jsonOutput;
+                //for(var i=0;i<arrobjJsonOutput.length;i++){
+                   // var outputJson=arrobjJsonOutput[i];
+                    //var objJson=outputJson.Output;
+                    var activityName,processName,processInstanceId,queueId,queueName;
+                   // if(objJson.Name=='ActivityName'){
                         //listParam.push(new Array(objJson.Name,encode_ParamValue(objJson.Value)));
-                        activityName=+objJson.Value;
-                    }
-                    if(objJson.Name=='RouteName'){
+                        activityName=+arrobjJsonOutput[7];
+                   // }
+                   // if(objJson.Name=='RouteName'){
                         //  listParam.push(new Array(objJson.Name,encode_ParamValue(objJson.Value)));
-                        processName=objJson.Value;
-                    }
-                    if(objJson.Name=='ProcessInstanceID'){
+                        processName=arrobjJsonOutput[6];
+                   // }
+                   // if(objJson.Name=='ProcessInstanceID'){
                         //  listParam.push(new Array(objJson.Name,encode_ParamValue(objJson.Value)));
-                        processInstanceId=objJson.Value;
-                    }
-                }
+                        processInstanceId=arrobjJsonOutput[3];
+                    //}
+                       queueId=arrobjJsonOutput[12];
+                       queueName=arrobjJsonOutput[11];
+               // }
             }
         }
     }
@@ -835,7 +879,7 @@ function getDoneInformation(){
 function wiOptDoneClick(){//Bug 68258
     /* following loop will get processincstanceid activityName and processName of the selected done workitems
     var ctrlTable=document.getElementById("frmworkitemlist:pnlResult");
-    var checkboxId="frmworkitemlist:checkBox_";
+    var checkboxId="frmworkitemlist:cb_";
     var rowCount = ctrlTable.rows.length;
     if(rowCount>0) {
         for(var iCount = 0; iCount < rowCount-2;iCount++)
@@ -843,26 +887,29 @@ function wiOptDoneClick(){//Bug 68258
             var wiClicked=document.getElementById(checkboxId+iCount);
             if(wiClicked.checked){
                     
-                var jsonOutput=document.getElementById("frmworkitemlist:hidWIJson"+(iCount+1)).innerHTML;
-                jsonOutput= eval("("+jsonOutput+")");
-                var arrobjJsonOutput= jsonOutput.Outputs;
-                for(var i=0;i<arrobjJsonOutput.length;i++){
-                    var outputJson=arrobjJsonOutput[i];
-                    var objJson=outputJson.Output;
-                    var activityName,processName,processInstanceId;
-                    if(objJson.Name=='ActivityName'){
+                var jsonOutput=document.getElementById("frmworkitemlist:hjn"+(iCount+1)).innerHTML;
+                //jsonOutput= eval("("+jsonOutput+")");
+                jsonOutput = jsonOutput.split(SEPERATOR1);
+                var arrobjJsonOutput= jsonOutput;
+               // for(var i=0;i<arrobjJsonOutput.length;i++){
+                   // var outputJson=arrobjJsonOutput[i];
+                  //  var objJson=outputJson.Output;
+                    var activityName,processName,processInstanceId,queueId,queueName;
+                   // if(objJson.Name=='ActivityName'){
                         //listParam.push(new Array(objJson.Name,encode_ParamValue(objJson.Value)));
-                        activityName=+objJson.Value;
-                    }
-                    if(objJson.Name=='RouteName'){
+                        activityName=+arrobjJsonOutput[7];
+                   // }
+                   // if(objJson.Name=='RouteName'){
                         //  listParam.push(new Array(objJson.Name,encode_ParamValue(objJson.Value)));
-                        processName=objJson.Value;
-                    }
-                    if(objJson.Name=='ProcessInstanceID'){
+                        processName=arrobjJsonOutput[6];
+                   // }
+                   // if(objJson.Name=='ProcessInstanceID'){
                         //  listParam.push(new Array(objJson.Name,encode_ParamValue(objJson.Value)));
-                        processInstanceId=objJson.Value;
-                    }
-                }
+                        processInstanceId=arrobjJsonOutput[3];
+                   // }
+                  //queueId=arrobjJsonOutput[12];
+                  //  queueName=arrobjJsonOutput[11];
+               // }
             }
         }
     }*/
@@ -1097,695 +1144,19 @@ function  RefreshClientComp(){
 	 ref.reloadPage(pid);  /*implemented by the calling page*/
          }catch(e){}
 }
-function formPopulated()
-{
-	console.log("Inside FormPopulated");
-	var pName = window.parent.strprocessname;
-	var pActivityName = window.parent.stractivityName;
-	console.log("Before Switch pName"+pName);
-	
-	
-	switch(pName)
-    {   	
-        case 'SupplyPoInvoices':
+/*function eventDispatched(pId,pEvent){
+	switch(pEvent.type)
+    {           
+        case 'click':
         {
-            switch(pActivityName)
+            switch(pId)
             {
-				case 'ManualIntroduction':
-				console.log("hello farman");
-					com.newgen.omniforms.formviewer.setVisible("Tab2", false);
-						com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","810px");
-				case 'Initiator':
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);
-				break;
-				
-				case 'StoreUser':
-				var grnnumber = document.getElementById('grnnumber').value;
-				var purchasestatus = document.getElementById('purchasestatus').value;
-				var previousactivity = document.getElementById('previousactivity').value;
-				
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);
-				
-				if(previousactivity=='Initiator'){
-				if(grnnumber==''){
-					com.newgen.omniforms.formviewer.setVisible("Btn_CancelGRN", false);
-					com.newgen.omniforms.formviewer.setVisible("Btn_GenerateGRN", true);
-				}
-				else{
-					com.newgen.omniforms.formviewer.setVisible("Btn_CancelGRN", true);
-					com.newgen.omniforms.formviewer.setVisible("Btn_GenerateGRN", false);
-				}
-				}
-				
-				if(previousactivity=='PurchaseUser'){
-					
-				}
-				
-				
-				
-				break;
-				
-				case 'QualityUser':
-				com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices","1105px");
-				com.newgen.omniforms.formviewer.setHeight("Frame1","1102px");
-				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);				
-				com.newgen.omniforms.formviewer.setVisible("Btn_CancelGRN", false);
-				com.newgen.omniforms.formviewer.setVisible("Btn_GenerateGRN", false);
-				com.newgen.omniforms.formviewer.setVisible("Frame4", false);
-				com.newgen.omniforms.formviewer.setTop("Label38","40px");	
-				com.newgen.omniforms.formviewer.setTop("grnnumber","59px");
-				com.newgen.omniforms.formviewer.setTop("Label40","98px");	
-				com.newgen.omniforms.formviewer.setTop("storeremarks","115px");	
-			
-				var itemTypeFlag = document.getElementById('itemtypeflag').value;
-				if(itemTypeFlag=='PP Bags'){
-					com.newgen.omniforms.formviewer.setVisible("Frame6", false);
-					com.newgen.omniforms.formviewer.setTop("Label41","35px");
-					com.newgen.omniforms.formviewer.setTop("Label42","35px");
-					com.newgen.omniforms.formviewer.setTop("qualitystatus","54px");
-					com.newgen.omniforms.formviewer.setTop("qualityremarks","54px");
-					com.newgen.omniforms.formviewer.setVisible("Quality_itemselect", false); 
-					com.newgen.omniforms.formviewer.setVisible("Label23", false);
-				}else if(itemTypeFlag=='Raw Material'){
-					com.newgen.omniforms.formviewer.setVisible("Frame6", false);
-					com.newgen.omniforms.formviewer.setVisible("Quality_itemselect", false); 
-					com.newgen.omniforms.formviewer.setVisible("Label23", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame7", true);
-					com.newgen.omniforms.formviewer.setTop("Frame7","55px");
-				}else if(itemTypeFlag=='Quarantine'){
-				com.newgen.omniforms.formviewer.setVisible("Frame7", false);
-				com.newgen.omniforms.formviewer.setVisible("Quality_itemselect", true); 
-					com.newgen.omniforms.formviewer.setVisible("Label23", true);
-					com.newgen.omniforms.formviewer.setVisible("Frame6", true);
-				}	
-				else{
-				
-				}
-				break;
-				
-				case 'PurchaseUser':
-				console.log("hi from purchase user");
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 0 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , true);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4 , false);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5 , false);
-				var previousactivity = document.getElementById('previousactivity').value; 
-				console.log("previousactivity : "+previousactivity);
-				if(previousactivity=='Initiator'){
-					console.log("inside pu flag farman fromini");
-					//com.newgen.omniforms.formviewer.clear("Combo7");
-					com.newgen.omniforms.formviewer.addItem("purchasestatus","Hold","Hold");
-					com.newgen.omniforms.formviewer.addItem("purchasestatus","Exception Cleared","Exception Cleared");
-				}
-				if(previousactivity=='QualityUser'){
-					console.log("inside pu flag-2 farman");
-					com.newgen.omniforms.formviewer.addItem("purchasestatus","Replacement/Exchange","Replacement/Exchange");
-					com.newgen.omniforms.formviewer.addItem("purchasestatus","Purchase Return","Purchase Return");
-				}
-				
-				
+				case 'opt1':alert('');
 				break;
 			}
-			break;
-		}
-		case 'ServicePoInvoices':
-		{
-			switch(pActivityName)
-            {
-				case 'Introduction':
-				com.newgen.omniforms.formviewer.setVisible("Label33", false);
-				com.newgen.omniforms.formviewer.setVisible("filestatus", false);
-				break; 
-				
-				case 'Initiator':
-				com.newgen.omniforms.formviewer.setVisible("Label33", false);
-				com.newgen.omniforms.formviewer.setVisible("filestatus", false);
-				break;
-
-				case 'Approver':
-				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame4",false);
-				com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame8",false);
-				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
-				com.newgen.omniforms.formviewer.setHeight("Frame4","231px");
-				com.newgen.omniforms.formviewer.setHeight("Frame8","165px");
-				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
-				
-				break;
-				
-				case 'Accounts':
-				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame4",false);
-				com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame8",false);
-				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
-				com.newgen.omniforms.formviewer.setHeight("Frame4","231px");
-				com.newgen.omniforms.formviewer.setHeight("Frame8","165px");
-				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
-				break;
-				
-				
-			}
-			let processName = document.getElementById('proctype').value;
-			switch(processName)
-			{
-						case 'Branding Out of home':
-						case 'Branding Relationship management':
-						case 'Branding Shop':
-						case 'Branding Tour Scheme':
-						case 'Branding Retailer Meeting':
-						case 'Technical Item':
-						case 'Technical Printing':
-						console.log("");
-						com.newgen.omniforms.formviewer.setVisible("Frame2", true);
-						com.newgen.omniforms.formviewer.setVisible("Frame4", false);
-						com.newgen.omniforms.formviewer.setVisible("Label7", false);
-						com.newgen.omniforms.formviewer.setVisible("sachsn", false);
-						com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", true);
-						com.newgen.omniforms.formviewer.setVisible("Frame8", true);
-						{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","685px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_ServicePoInvoices","880px");
-					break;
-					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","685px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_ServicePoInvoices","880px");
-					break;
-					}
-					}
-						//com.newgen.omniforms.formviewer.setTop("LINE_DETAILS","440px");
-						//com.newgen.omniforms.formviewer.setTop("Frame8","842px");
-						return true;
-						
-						
-						case 'Branding Branding Expenses':
-						case 'Branding Mass Advertisement':
-						case 'Branding Sponsorship':
-						case 'Branding Dealer Meeting':
-						com.newgen.omniforms.formviewer.setVisible("Frame2", true);
-						com.newgen.omniforms.formviewer.setVisible("Label7", true);
-						com.newgen.omniforms.formviewer.setVisible("sachsn", true);
-						com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", false);
-						com.newgen.omniforms.formviewer.setVisible("Frame4", true);
-						com.newgen.omniforms.formviewer.setVisible("Frame8", true);
-						//com.newgen.omniforms.formviewer.setTop("Frame4","440px");
-						//com.newgen.omniforms.formviewer.setTop("Frame8","842px");
-						{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","676px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_ServicePoInvoices","852px");
-					break;
-					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","676px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_ServicePoInvoices","852px");
-					break;
-					}
-					}
-						return true;
-						
-						default:
-						com.newgen.omniforms.formviewer.setVisible("Frame2", false);
-						com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", false);
-						com.newgen.omniforms.formviewer.setVisible("Frame4", false);
-						com.newgen.omniforms.formviewer.setVisible("Frame8", false);
-							
-			}
-			
-		break;
-		}
-		case 'NonPoInvoices1':
-		{
-			console.log("inside non po invoice process");
-			switch(pActivityName)
-            {
-				
-				case 'Introduction':
-				com.newgen.omniforms.formviewer.setVisible("Label23", false);
-				com.newgen.omniforms.formviewer.setVisible("filestatus", false);
-				break;
-				
-				case 'Initiator':
-				console.log("inside the activity  ");
-				com.newgen.omniforms.formviewer.setVisible("Label23", false);
-				com.newgen.omniforms.formviewer.setVisible("filestatus", false);
-				/*com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
-				com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame8",false);
-				console.log("inside first switchw");
-				//return true;*/
-				break;
-				
-				case 'Approver':
-				console.log("inside activity approver");
-				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
-				com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame8",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame4",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame6",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame10",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame5",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame9",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame7",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame11",false);
-				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
-				com.newgen.omniforms.formviewer.setVisible("Label38", false);
-				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
-				com.newgen.omniforms.formviewer.setHeight("Frame9","242px");
-				com.newgen.omniforms.formviewer.setHeight("Frame10","234px");
-				com.newgen.omniforms.formviewer.setHeight("Frame11","199px");
-				com.newgen.omniforms.formviewer.setHeight("Frame8","260px");
-				
-				break;
-				
-				case 'Accounts':
-				console.log("inside activity accounts");
-				com.newgen.omniforms.formviewer.setEnabled("Frame2",false);
-				com.newgen.omniforms.formviewer.setEnabled("LINE_DETAILS",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame8",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame4",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame6",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame10",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame5",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame9",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame7",false);
-				com.newgen.omniforms.formviewer.setEnabled("Frame11",false);
-				com.newgen.omniforms.formviewer.setEnabled("proctype",false);
-				com.newgen.omniforms.formviewer.setHeight("LINE_DETAILS","234px");
-				com.newgen.omniforms.formviewer.setHeight("Frame9","242px");
-				com.newgen.omniforms.formviewer.setHeight("Frame10","234px");
-				com.newgen.omniforms.formviewer.setHeight("Frame11","199px");
-				com.newgen.omniforms.formviewer.setHeight("Frame8","260px");
-				break;
-			}
-				
-				
-				switch(document.getElementById('proctype').value)// proctype = process Name
-				{
-					//console.log("after first switchw");
-					case 'Handling/Unloading':
-					case 'BP Commissions & Third Party Commissions':
-					case 'Demurrage and Wharfage (Logistics)':
-					case 'Secondary Freight (Road)':
-					case 'Rent Godown and Rent Office':
-					case 'Technical Services: Service & Technical Activity':
-					case 'Services: Miscellaneous Charges':
-					case 'Government Bills':
-					case 'Travelling':
-					case 'Bonus/Exgratia':
-					case 'Donations':
-					case 'Freight':
-					case 'Repair and Supply: Minor Supply Items  - Part1':
-					console.log("inside second switch");
-					console.log("case 1  processes");
-					com.newgen.omniforms.formviewer.setVisible("Frame2",true);
-					//console.log("process ctgr");
-					com.newgen.omniforms.formviewer.setVisible("Frame4", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame5", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame6", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame7", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame9", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame10", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame11", false);
-					com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", true);
-					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
-					com.newgen.omniforms.formviewer.setTop("Frame8","860px");//594
-					com.newgen.omniforms.formviewer.setTop("LINE_DETAILS","448px");
-					com.newgen.omniforms.formviewer.setNGValue("Text_inv1",com.newgen.omniforms.formviewer.getNGValue("invoicenumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Date_inv1",com.newgen.omniforms.formviewer.getNGValue("invoicedate"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_mob1",com.newgen.omniforms.formviewer.getNGValue("mobilenumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_cin1",com.newgen.omniforms.formviewer.getNGValue("cin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_pan1",com.newgen.omniforms.formviewer.getNGValue("pannumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_email1",com.newgen.omniforms.formviewer.getNGValue("emailid"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_vgstin1",com.newgen.omniforms.formviewer.getNGValue("vendorgstin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_wgstin1",com.newgen.omniforms.formviewer.getNGValue("wclgstin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_snature1",com.newgen.omniforms.formviewer.getNGValue("natureofservice"));
-					com.newgen.omniforms.formviewer.setNGValue("Drop_ss1",com.newgen.omniforms.formviewer.getNGValue("servicegiveninstate"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_splace1",com.newgen.omniforms.formviewer.getNGValue("placeofsupply"));
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1250px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","960px");
-					break;
-					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","960px");
-					break;
-					}
-					}
-					return true;
-					break;
-					
-					
-					case 'Demurrage and Wharfage (Plant/GU) (Rail)':
-					case 'Other Logistic Expenses (Rail)':
-					case 'Primary Freight and Freight on clinker Sale (Rail)':
-					console.log("case 2 processes");
-					com.newgen.omniforms.formviewer.setVisible("Frame4", true);
-					com.newgen.omniforms.formviewer.setVisible("Frame2", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame5", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame6", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame7", false);
-					com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame9", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame10", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame11", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
-					com.newgen.omniforms.formviewer.setTop("Frame8","345px");
-					com.newgen.omniforms.formviewer.setNGValue("Text_inv2",com.newgen.omniforms.formviewer.getNGValue("invoicenumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Date_inv2",com.newgen.omniforms.formviewer.getNGValue("invoicedate"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_vgstin2",com.newgen.omniforms.formviewer.getNGValue("vendorgstin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_wgstin2",com.newgen.omniforms.formviewer.getNGValue("wclgstin"));
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","720px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					//com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","620px");
-					break;
-					
-					case 'Accounts':
-					//com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","620px");
-					break;
-					}
-					}
-					return true;
-					break;
-					
-					case 'Demurrage and Wharfage (Plant/GU) (Road)':
-					case 'Other Logistic Expenses (Road)':
-					case 'Primary Freight and Freight on clinker Sale (Road)':
-					console.log("case 3 processes");
-					com.newgen.omniforms.formviewer.setVisible("Frame2", true);
-					com.newgen.omniforms.formviewer.setVisible("Frame4", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame5", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame6", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame7", false);
-					com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", true);
-					com.newgen.omniforms.formviewer.setVisible("Frame9", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame10", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame11", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
-					com.newgen.omniforms.formviewer.setTop("Frame8","860px");
-					com.newgen.omniforms.formviewer.setTop("LINE_DETAILS","448px");
-					com.newgen.omniforms.formviewer.setNGValue("Text_inv1",com.newgen.omniforms.formviewer.getNGValue("invoicenumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Date_inv1",com.newgen.omniforms.formviewer.getNGValue("invoicedate"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_mob1",com.newgen.omniforms.formviewer.getNGValue("mobilenumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_cin1",com.newgen.omniforms.formviewer.getNGValue("cin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_pan1",com.newgen.omniforms.formviewer.getNGValue("pannumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_email1",com.newgen.omniforms.formviewer.getNGValue("emailid"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_vgstin1",com.newgen.omniforms.formviewer.getNGValue("vendorgstin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_wgstin1",com.newgen.omniforms.formviewer.getNGValue("wclgstin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_snature1",com.newgen.omniforms.formviewer.getNGValue("natureofservice"));
-					com.newgen.omniforms.formviewer.setNGValue("Drop_ss1",com.newgen.omniforms.formviewer.getNGValue("servicegiveninstate"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_splace1",com.newgen.omniforms.formviewer.getNGValue("placeofsupply"));
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1230px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","965px");
-					break;
-					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","688px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","965px");
-					break;
-					}
-					}
-					return true;
-					break;
-					
-					case 'Travel Allowance Bills (TA Bills) (Hotel)':
-					console.log("case 4 processes");
-					com.newgen.omniforms.formviewer.setVisible("Frame6", true);
-					com.newgen.omniforms.formviewer.setVisible("Frame2", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame5", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame4", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame7", false);
-					com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame9", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame11", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame10", true);
-					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
-					com.newgen.omniforms.formviewer.setTop("Frame8","842px");
-					com.newgen.omniforms.formviewer.setTop("Frame10","446px");
-					com.newgen.omniforms.formviewer.setNGValue("Text_inv3",com.newgen.omniforms.formviewer.getNGValue("invoicenumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Date_inv3",com.newgen.omniforms.formviewer.getNGValue("invoicedate"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_mob2",com.newgen.omniforms.formviewer.getNGValue("mobilenumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_cin2",com.newgen.omniforms.formviewer.getNGValue("cin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_pan2",com.newgen.omniforms.formviewer.getNGValue("pannumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_email2",com.newgen.omniforms.formviewer.getNGValue("emailid"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_vgstin3",com.newgen.omniforms.formviewer.getNGValue("vendorgstin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_wgstin3",com.newgen.omniforms.formviewer.getNGValue("wclgstin"));
-					com.newgen.omniforms.formviewer.setNGValue("Drop_ss2",com.newgen.omniforms.formviewer.getNGValue("servicegiveninstate"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_splace2",com.newgen.omniforms.formviewer.getNGValue("placeofsupply"));
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1220px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","686px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","965px");
-					break;
-					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","686px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","965px");
-					break;
-					}
-					}
-					return true;
-					break;
-			
-					case 'Travel Allowance Bills (TA Bills) (Train)':
-					console.log("case 5 processes");
-					com.newgen.omniforms.formviewer.setVisible("Frame5", true);
-					com.newgen.omniforms.formviewer.setVisible("Frame2", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame4", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame6", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame7", false);
-					com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame9", true);
-					com.newgen.omniforms.formviewer.setVisible("Frame10", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame11", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
-					com.newgen.omniforms.formviewer.setTop("Frame8","739px");
-					com.newgen.omniforms.formviewer.setTop("Frame9","340px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1130px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","588px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","850px");
-					break;
-					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","588px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","850px");
-					break;
-					}
-					}
-					return true;
-					break;
-					
-					case 'Travel Desk and Company Expenses Reimbursement':
-					console.log("case 6 processes");
-					com.newgen.omniforms.formviewer.setVisible("Frame2", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame4", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame5", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame6", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame7", true);
-					com.newgen.omniforms.formviewer.setVisible("LINE_DETAILS", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame9", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame10", false);
-					com.newgen.omniforms.formviewer.setVisible("Frame11", true);
-					com.newgen.omniforms.formviewer.setVisible("Frame8", true);
-					com.newgen.omniforms.formviewer.setTop("Frame8","730px");
-					com.newgen.omniforms.formviewer.setTop("Frame11","444px");
-					com.newgen.omniforms.formviewer.setNGValue("Text_inv4",com.newgen.omniforms.formviewer.getNGValue("invoicenumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Date_inv4",com.newgen.omniforms.formviewer.getNGValue("invoicedate"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_mob3",com.newgen.omniforms.formviewer.getNGValue("mobilenumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_cin3",com.newgen.omniforms.formviewer.getNGValue("cin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_pan3",com.newgen.omniforms.formviewer.getNGValue("pannumber"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_email3",com.newgen.omniforms.formviewer.getNGValue("emailid"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_vgstin4",com.newgen.omniforms.formviewer.getNGValue("vendorgstin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_wgstin4",com.newgen.omniforms.formviewer.getNGValue("wclgstin"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_snature2",com.newgen.omniforms.formviewer.getNGValue("natureofservice"));
-					com.newgen.omniforms.formviewer.setNGValue("Drop_ss3",com.newgen.omniforms.formviewer.getNGValue("servicegiveninstate"));
-					com.newgen.omniforms.formviewer.setNGValue("Text_splace3",com.newgen.omniforms.formviewer.getNGValue("placeofsupply"));
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","1110px");
-					{
-					switch(pActivityName)
-					{
-					case 'Approver':
-					console.log("activity inside process");
-					com.newgen.omniforms.formviewer.setTop("Frame8","654px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","930px");
-					break;
-					
-					case 'Accounts':
-					com.newgen.omniforms.formviewer.setTop("Frame8","654px");
-					com.newgen.omniforms.formviewer.setHeight("FRM_NonPoInvoices","930px");
-					break;
-					}
-					}
-					
-					return true;
-			break;
-					
-			}			
-				 
-				
-				
-		break;
-		}
-		
-	}
-	
-return true;
-	
-}
-function eventDispatched(pId,pEvent){
-	
-	var pName = window.parent.strprocessname;
-	var pActivityName = window.parent.stractivityName;
-	//console.log(pName +"/"+pActivityName );
-	
-	switch(pName)
-    {   	
-        case 'SupplyPoInvoices':
-        {
-            switch(pActivityName)
-            {
-				case 'Introduction':
-				case 'Initiator':
-				case 'StoreUser':
-				case 'QualityUser':
-				//console.log("Inside pName Introduction switch");
-				return eventDispatched_SupplyPoInvoices(pId,pEvent);
-				
-				
-			}
-			break;
 		}	
-		break;
-		
-		case 'NonPoInvoices1':
-        {
-            switch(pActivityName)
-            {
-				case 'Introduction':
-				case 'Initiator':
-				//console.log("Inside pName Introduction switch");
-				return eventDispatched_NonPoInvoices1(pId,pEvent);
-			}
-		}
-		break;
-		
-		case 'ServicePoInvoices':
-        {
-			switch(pActivityName)
-            {
-				case 'Introduction':
-				case 'Initiator':
-				//console.log("Inside pName Introduction switch");
-				return eventDispatched_ServicePoInvoices(pId,pEvent);
-			}			
-		}
-		break;		
 	}
-}
-
-function validateForm(pEvent){
-
-	var pname=window.parent.strprocessname;
-	var activityName=window.parent.stractivityName;
-	console.log("Inside validate" + pname);
-	switch(pname)
-    {   	
-        case 'SupplyPoInvoices':
-        {
-			console.log("Activityname : " + activityName);
-            switch(activityName)
-            {
-				case 'Introduction':
-				case 'ManualIntroduction':
-				case 'Initiator':
-				case 'StoreUser':
-				console.log("Inside pName Introduction switch");
-				  return validate_SupplyPoInvoices(pEvent,activityName);
-				  
-			}
-		}
-		break;
-		
-		 case 'ServicePoInvoices':
-        
-			console.log("Activityname : " + activityName);
-            //switch(activityName)
-            {
-				//case 'Introduction':
-				//case 'Initiator':
-				//case 'StoreUser':
-				console.log("inside validate_ServicePoInvoices");
-				  return validate_ServicePoInvoices(pEvent,activityName);
-				 
-			}
-		
-		break;
-		
-		 case 'NonPoInvoices1':
-		//if(pname == 'NonPoInvoices')
-		{
-			console.log("Inside validate_NonPoInvoices");
-			return validate_NonPoInvoices1(pEvent,activityName);
-		
-		}
-		break;
-	}
-}
-
+}*/
 
 function getExtParam(processName, activityName)
 {
@@ -1814,7 +1185,7 @@ function validateAccNo(ref){
     }
 	if(!bError){
 		var i=0;
-	    if(fieldValue=='-'){ 
+	    if(fieldValue=='-'){
 			bError = true;
 			msg = "Invalid Number Entered";
 		}
@@ -2545,7 +1916,7 @@ function raiseClick(){
      return true;
 }
 
-function getWaterMarkText(strprocessname,stractivityName,pid){
+function getWaterMarkText(strprocessname,stractivityName,pid,userName){
     var strWaterMarkText="";
     /* 
      * This funcion is used to send the text for WaterMark printing that will be  displayed in the downloaded document.
@@ -2694,7 +2065,7 @@ function customLinkWIHeader() {
     //sample code to receive ProcessInstanceId of selected workitem
     /*
     var ctrlTableId="frmworkitemlist:pnlResult";
-    var checkboxId="frmworkitemlist:checkBox_";
+    var checkboxId="frmworkitemlist:cb_";
     var ctrlTable=document.getElementById(ctrlTableId);
     var pid="";
     var strSelectedIndex="";
@@ -2713,16 +2084,17 @@ function customLinkWIHeader() {
                     }else{
                         strSelectedIndex=strSelectedIndex+","+iCount;
                     }
-                    var jsonOutput=document.getElementById("frmworkitemlist:hidWIJson"+(iCount+1)).innerHTML;
-                    jsonOutput= eval("("+jsonOutput+")");
-                    var arrobjJsonOutput= jsonOutput.Outputs;
-                    for(var i=0;i<arrobjJsonOutput.length;i++){
-                        var outputJson=arrobjJsonOutput[i];
-                        var objJson=outputJson.Output;
-                        if(objJson.Name=='ProcessInstanceID'){
-                            pid =encode_utf8(objJson.Value);
-                        }
-                    }
+                    var jsonOutput=document.getElementById("frmworkitemlist:hjn"+(iCount+1)).innerHTML;
+                    //jsonOutput= eval("("+jsonOutput+")");
+                    jsonOutput = jsonOutput.split(SEPERATOR1);
+                    var arrobjJsonOutput= jsonOutput;
+                    //for(var i=0;i<arrobjJsonOutput.length;i++){
+                      //  var outputJson=arrobjJsonOutput[i];
+                      //  var objJson=outputJson.Output;
+                        //if(objJson.Name=='ProcessInstanceID'){
+                            pid =encode_utf8(arrobjJsonOutput[3]);
+                        //}
+                    //}
                 }
             }
         }
@@ -2801,7 +2173,7 @@ function showPickList(textBoxId, selVarName, selVarType, selProcessName, selActi
        Getting variable type    ->  document.getElementById(selVarType).value   
     */
 }
-function postSaveFormHook(status,statusCode) {
+function postSaveFormHook(status,statusCode, response) {
     // This function will get called after save form on workitem 
     // status: success or failure
     // status code :200 - success, :598,599 : failure
@@ -2812,6 +2184,24 @@ function postSaveFormHook(status,statusCode) {
 } 
 function preHandleOptionsHook(queueId,queueName,processDefId,oper)
 {
+    /*if(typeof window.parent.isManualResizeCalled != 'undefined'){
+        var bManualResizeCalled = window.parent.isManualResizeCalled();
+        if(bManualResizeCalled){
+            var arrParams = null; 
+            if(oper == "1") {
+                arrParams = window.parent.getFromCompHM("Workitem List");
+                 if(arrParams != null){
+                     ReloadWorkitemList(arrParams[0],arrParams[1],arrParams[2],arrParams[3],arrParams[4],arrParams[5],arrParams[6],arrParams[7]);
+                 }       
+            } else if(oper == "3"){
+                arrParams = window.parent.getFromCompHM("Workitem List");
+                if(arrParams != null){
+                     SearchWorkitem(arrParams[0],arrParams[1],arrParams[2],arrParams[3],arrParams[4],arrParams[5],arrParams[6]);
+                 }
+            }
+        }
+    }*/
+   
 // In this function , you can enable disable options like New, Done before loading workitemlist
 // parameters queueId, queueName
 //oper =1 - on queueclick, 2- set filter, 3- Advanced search, 4- on quick search, 
@@ -2940,3 +2330,262 @@ function hideAnnotationForWorkstep(strprocessname,stractivityName,strQueueName){
 function WDReassignClick(){
     return true;
 }
+
+function versionListWinHook(processInstanceId,DocumentId,DocumentType) {
+    return true;
+}
+
+function isCustomWorkitem(PrcDefId,queueId,queueType){
+    var customNewWI = false;    
+    return customNewWI;
+}
+
+function getFormType(PrcDefId,queueId,queueType){
+    // 1 CustomForm
+   //  2 IForm
+     return "2";
+}
+
+function customReassign(wiInfo,strprocessname,stractivityName) {
+    return false;
+}
+
+function setCustomDocComment() {
+    /*if(filesList!=null) {
+        for(var i=0;i < filesList.length;i++){
+            if(document.getElementById("importForm:fileListDataTable:"+i+":dtTxtDocComment") != null){
+                document.getElementById("importForm:fileListDataTable:"+i+":dtTxtDocComment").value = "abc";
+            }
+        }    
+    }*/
+    return true;
+}
+
+function showHideWorkitemOption(operation,strdata){
+    //operation value would be Initiate,New,Done,Refer,Revoke,Release,Reassign,Delete,Priority,Property,Reminder,AssignToMe,Save,AdhocRouting,Unlock,Hold,Unhold,ReminderList,SetFilter,Preferences,Count
+    //strdata will return the data that was passed during SearchWorkitem call  
+    //This method will show,hide or disable the workitem operations
+    //return false in case you want hide or disable
+    return true;
+}
+
+function customWorklistMode(){
+    //Return your worklist Mode , WD for user webdesktop and PM for Process Manager 
+    return "";
+}
+
+function forcedReassign(enableStatus,strdata){
+    //This hook will enable the reassign option in workitemlist if it is getting disabled by the product conditions
+    //enableStatus will be false if the Reassign link is getting disabled
+    //strdata will return the data that was passed during SearchWorkitem call  
+    //return true in case you want to enable the Reassign link
+    return false;
+}
+
+function showCustomIntroduce(){
+    //You can return false if you want to disable the introduce button on custom workitem window.
+    return true;
+}
+
+function preInitiateWIClick(){
+    //This hook is called on preinitiate of custom workitem. If you don't want to create workitem, then return false
+    return true;
+}
+
+function commentPreHook(op,ref){
+    //op=Refer,Reassign,Conversation,General
+    //val=value of entered comments
+    //if(ref.value.trim()=='A') {
+    //ref.focus();
+    //return false;
+    //}
+    return true;
+}
+
+function showCustomClose(){
+     //You can return false if you want to hide the close button on custom workitem window.
+     return true;
+}
+
+function isShowGRTActionStatus() {
+    return true;
+}
+
+function openCustomWindow(fieldId, actionId, archivalMode){
+    return false;
+}
+
+function isShowInterfaceHeader(strprocessname, stractivityName) {
+	return true;
+}
+function isEmbedddedNextWI(strprocessname, stractivityName) {
+	return true;
+}
+function closeWIEMPostHooK(strprocessname, stractivityName) {
+	return true;
+}
+ 
+function multiDocumentInfoHooK(strprocessname,stractivityName,docName,docIndex)
+{   
+var arrDocIndex;
+//alert("DocIndex" +docIndex);
+  //  alert("DocName" + docName);
+	/*if(typeof docIndex!="undefined"){
+            arrDocIndex=docIndex.split(",");
+            alert("Number of Documents uploaded:" +arrDocIndex.length)
+      }   */  
+	return true;
+}
+function getCustomLayoutWidth(strprocessname,stractivityName){
+    return "";
+}
+
+function formPopulated()
+{
+	var pName = window.parent.strprocessname;
+	var pActivityName = window.parent.stractivityName;
+	
+	switch(pName)
+    {   	
+        case 'SupplyPoInvoices':
+        {
+			return formPopulated_SupplyPoInvoice(pActivityName);	
+        }
+		break;
+		case 'NonPoInvoice':
+		{
+			return formPopulated_NonPoInvoice(pActivityName);	
+		}
+		break;
+		
+		case 'ServicePoInvoice':
+		{
+			return formPopulated_ServicePoInvoice(pActivityName);	
+		}
+		break;
+		case 'RABill':
+		{
+			return formPopulated_RABill(pActivityName);
+		}
+		break;
+		case 'OutwardFreight':
+		{
+			return formPopulated_OutwardFreight(pActivityName);
+		}
+		break;
+	}	
+return true;	
+}
+
+function eventDispatched(pId,pEvent){
+	
+	var pName = window.parent.strprocessname;
+	var pActivityName = window.parent.stractivityName;
+	//console.log(pName +"/"+pActivityName );
+	
+	switch(pName)
+    {   	
+        case 'SupplyPoInvoices':
+        {
+          return eventDispatched_SupplyPoInvoices(pId,pEvent);
+		}	
+		break;
+		
+			
+		case 'NonPoInvoice':
+		{
+			console.log("inside eventd nonpo");
+			return eventDispatched_NonPoInvoice(pId,pEvent);
+		}
+		break;
+		
+		case 'ServicePoInvoice':
+		{
+			console.log("inside eventd ServicePoInvoice");
+			return eventDispatched_ServicePoInvoice(pId,pEvent);
+		}
+		break;
+		
+		case 'RABill':
+		{
+			console.log("inside eventDispatched_RABill");
+			return eventDispatched_RABill(pId,pEvent);
+		}
+		break;
+		
+		case 'OutwardFreight':
+		{
+			console.log("inside eventDispatched_OutwardFreight");
+			return eventDispatched_OutwardFreight(pId,pEvent);
+		}
+		break;
+	}
+	return true;
+}
+
+function validateForm(pEvent){
+	var pname=window.parent.strprocessname;
+	var activityName=window.parent.stractivityName;
+	switch(pname)
+    {   	
+        case 'SupplyPoInvoices':
+        {
+			return validate_SupplyPoInvoices(pEvent,activityName);	
+		}
+		break;
+		
+		case 'NonPoInvoice':
+        {
+			return validate_NonPoInvoices(pEvent,activityName);	
+		}
+		break;
+		
+		case 'ServicePoInvoice':
+		{
+			return validate_PoInvoices(pEvent,activityName);
+			
+		}
+		break;
+		case 'RABill':
+		{
+			return validate_RABill(pEvent,activityName);
+			
+		}
+		break;
+		case 'OutwardFreight':
+		{
+			return validate_OutwardFreight(pEvent,activityName);
+			
+		}
+		break;
+	}
+	return true;
+}
+
+function eventTabClick(tabName,sheetIndex)
+{
+	var pname=window.parent.strprocessname;
+	var activityName=window.parent.stractivityName;
+	if(pname=='SupplyPoInvoices')
+    {
+		return tab_clicked_SupplyPoInvoices(tabName,sheetIndex,activityName);
+	}
+	else if(pname=='NonPoInvoice')
+	{
+		return tab_clicked_NonPoInvoice(tabName,sheetIndex,activityName);
+	}
+	else if(pname=='ServicePoInvoice')
+	{
+		return tab_clicked_ServicePoInvoice(tabName,sheetIndex,activityName); 
+	}
+	else if(pname=='RABill')
+	{
+		return tab_clicked_RABill(tabName,sheetIndex,activityName);
+	}
+	else if(pname=='OutwardFreight')
+	{
+		return tab_clicked_OutwardFreight(tabName,sheetIndex,activityName);
+	}
+return true;	
+}
+
