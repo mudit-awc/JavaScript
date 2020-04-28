@@ -60,6 +60,7 @@ function eventDispatched_ServicePoInvoice(pId,pEvent){
 				case 'Pick_vendorlocation':
 				case 'Pick_tdsgroup':
 				case 'Pick_qocVendor':
+				case 'Pick_Otherchrges_line_item_po':
 				case 'Clear_qocVendor':
 				{
 					return true;
