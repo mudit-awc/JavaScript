@@ -5,6 +5,12 @@ function eventDispatched_RABill(pId,pEvent)
         case 'click':
             switch(pEvent.srcElement.id)
             {
+				case 'qratd_exempt':
+				{
+					return true;
+					break;
+				}
+				
 				case 'Btn_RA_TDS':
 				{
 					return true;
@@ -93,6 +99,12 @@ function eventDispatched_RABill(pId,pEvent)
 				}
 				break;
 				case 'filestatus':
+				{
+					return true;
+				}
+				break;
+				
+				case 'qratd_gstratetype':
 				{
 					return true;
 				}

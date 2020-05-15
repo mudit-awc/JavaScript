@@ -62,38 +62,38 @@ function tab_clicked_OutwardFreight(tabName,sheetIndex,activityName){
 		console.log("inside tab1");
 			switch(SheetIndex){				
 				case '0':
-				setControlHeight("Tab1","480px");
-				setControlHeight("Frame2","720px");
-				setControlTop("Tab2","920px");
-				setControlHeight("OutwardFreight","1165px");
+				setControlHeight("Tab1","280px");
+				setControlHeight("Frame2","800px");
+				setControlTop("Tab2","1000px");
+				setControlHeight("OutwardFreight","1200px");
 				break;
 				
 				case '1':		//CTI
 				setControlHeight("Tab1","200px");
-				setControlHeight("Frame2","600px");				
-				setControlTop("Tab2","800px");
-				setControlHeight("OutwardFreight","1050px");
+				setControlHeight("Frame2","720px");				
+				setControlTop("Tab2","920px");
+				setControlHeight("OutwardFreight","11200px");
 				break;
 				
 				case '2':       //VTI
-				setControlHeight("Tab1","200px");				
-				setControlHeight("Frame2","600px");				
-				setControlTop("Tab2","800px");
-				setControlHeight("OutwardFreight","1050px");
+				setControlHeight("Tab1","150px");				
+				setControlHeight("Frame2","670px");				
+				setControlTop("Tab2","870px");
+				setControlHeight("OutwardFreight","1070px");
 				break;
 				
-				case '3':		//TD
-				setControlHeight("Tab1","600px");				
-				setControlHeight("Frame2","870px");				
-				setControlTop("Tab2","1100px");
-				setControlHeight("OutwardFreight","1365px");
+				case '3':		//TD		
+				setControlHeight("Tab1","460px");				
+				setControlHeight("Frame2","980px");				
+				setControlTop("Tab2","1180px");
+				setControlHeight("OutwardFreight","1380px");
 				break;
 				
 				case '4':       //WTD
-				setControlHeight("Tab1","600px");				
-				setControlHeight("Frame2","800px");				
-				setControlTop("Tab2","1000px");
-				setControlHeight("OutwardFreight","1265px");
+				setControlHeight("Tab1","300px");				
+				setControlHeight("Frame2","820px");				
+				setControlTop("Tab2","1020px");
+				setControlHeight("OutwardFreight","1220px");
 				break;
 				
 			}
@@ -110,7 +110,7 @@ function formPopulated_OutwardFreight(activityName){
 				setControlVisible("Frame2", false);
 				setControlVisible("Tab1", false);				
 				setControlVisible("Tab2", false);
-				setControlHeight("OutwardFreight","1165px");
+				setControlHeight("OutwardFreight","1000px");
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , false);
 				break;
 				
@@ -118,10 +118,11 @@ function formPopulated_OutwardFreight(activityName){
 				setControlVisible("Frame2", true);
 				setControlVisible("Tab1", true);				
 				setControlVisible("Tab2", true);
-				setControlHeight("Tab1","480px");
-				setControlHeight("Frame2","720px");
-				setControlTop("Tab2","900px");
-				setControlHeight("OutwardFreight","1165px");
+				setControlTop("Tab1","485px");
+				setControlHeight("Tab1","280px");
+				setControlHeight("Frame2","800px");
+				setControlTop("Tab2","1000px");
+				setControlHeight("OutwardFreight","1200px");
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , false);
 				com.newgen.omniforms.formviewer.setNGValue("exempt","");
 
@@ -136,10 +137,11 @@ function formPopulated_OutwardFreight(activityName){
 				setControlVisible("Tab1", true);
 				setControlEnabled("Tab1",false);				
 				setControlVisible("Tab2", true);
-				setControlHeight("Tab1","480px");
-				setControlHeight("Frame2","720px");
-				setControlTop("Tab2","900px");
-				setControlHeight("OutwardFreight","1165px");
+				setControlTop("Tab1","485px");
+				setControlHeight("Tab1","280px");
+				setControlHeight("Frame2","800px");
+				setControlTop("Tab2","1000px");
+				setControlHeight("OutwardFreight","1200px");
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , false);
 				com.newgen.omniforms.formviewer.setNGValue("exempt","");
 				break;
@@ -155,10 +157,11 @@ function formPopulated_OutwardFreight(activityName){
 				setControlEnabled("baseamount",true);
 				setControlEnabled("currency",true);
 				setControlEnabled("qoftd_hsnsactype",true);
-				setControlHeight("Tab1","480px");
-				setControlHeight("Frame2","720px");
-				setControlTop("Tab2","900px");
-				setControlHeight("OutwardFreight","1165px");
+				setControlTop("Tab1","485px");
+				setControlHeight("Tab1","280px");
+				setControlHeight("Frame2","800px");
+				setControlTop("Tab2","1000px");
+				setControlHeight("OutwardFreight","1200px");
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , false);
 				com.newgen.omniforms.formviewer.setNGValue("exempt","");
 				break;
