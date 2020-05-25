@@ -48,6 +48,8 @@ function eventDispatched_RABill(pId,pEvent)
 				case 'Pick_vendorlocation':
 				case 'Pick_prjcategory_Vi_li':
 				case 'Pick_tefrid':
+				case 'Btn_Export_AbstractSheet':
+				case 'Btn_Export_ItemJournal':
 				console.log("inside button click PICK_tefrid");
 				{
 					return true;
@@ -125,8 +127,7 @@ function tab_clicked_RABill(tabName,sheetIndex,activityName){
 	console.log("activityName : "+activityName);
 	switch(tabName1){
 		case 'Tab1': //Tab Name
-			switch(sheetIndex1){
-				
+			switch(sheetIndex1){				
 				case '0':
 				if(activityName=='Indexer'||activityName=='Introduction'){
 					com.newgen.omniforms.formviewer.setHeight("Tab1","430px");
@@ -134,7 +135,7 @@ function tab_clicked_RABill(tabName,sheetIndex,activityName){
 				com.newgen.omniforms.formviewer.setHeight("Frame1","1215px");
 				com.newgen.omniforms.formviewer.setHeight("RABill","1225px");
 				com.newgen.omniforms.formviewer.setTop("Tab2","855px");
-				}else if(activityName=='Accounts'){
+				}else if(activityName=='AccountsMaker' || activityName=='AccountsChecker'){
 					com.newgen.omniforms.formviewer.setHeight("Tab1","323px");
 				com.newgen.omniforms.formviewer.setHeight("Frame2","600px");
 				com.newgen.omniforms.formviewer.setHeight("Frame1","1090px");
@@ -156,7 +157,7 @@ function tab_clicked_RABill(tabName,sheetIndex,activityName){
 				com.newgen.omniforms.formviewer.setHeight("Frame1","1115px");
 				com.newgen.omniforms.formviewer.setHeight("RABill","1120px");
 				com.newgen.omniforms.formviewer.setTop("Tab2","750px");
-				}else if(activityName=='Accounts'){
+				}else if(activityName=='AccountsMaker' || activityName=='AccountsChecker'){
 					com.newgen.omniforms.formviewer.setHeight("Tab1","323px");
 				com.newgen.omniforms.formviewer.setHeight("Frame2","600px");
 				com.newgen.omniforms.formviewer.setHeight("Frame1","1090px");
@@ -178,7 +179,7 @@ function tab_clicked_RABill(tabName,sheetIndex,activityName){
 				com.newgen.omniforms.formviewer.setHeight("Frame1","1265px");
 				com.newgen.omniforms.formviewer.setHeight("RABill","1270px");
 				com.newgen.omniforms.formviewer.setTop("Tab2","895px");
-				}else if(activityName=='Accounts'){
+				}else if(activityName=='AccountsMaker' || activityName=='AccountsChecker'){
 					com.newgen.omniforms.formviewer.setHeight("Tab1","323px");
 				com.newgen.omniforms.formviewer.setHeight("Frame2","600px");
 				com.newgen.omniforms.formviewer.setHeight("Frame1","1090px");
@@ -237,9 +238,6 @@ function tab_clicked_RABill(tabName,sheetIndex,activityName){
 				com.newgen.omniforms.formviewer.setTop("Tab2","910px");
 				return true;
 	        	break;
-				
-				
-			
 			}
 		break;
 		case 'Tab2': //Tab Name
@@ -263,6 +261,7 @@ function validate_RABill(pEvent,activityName){
 			var location1 = document.getElementById('location').value;
 			var rabilldate = document.getElementById('rabilldate').value;
 			var postingdate = document.getElementById('postingdate').value;
+			var description = document.getElementById('description').value;
 			console.log("Introduce/Done");
 			if(activityName=='Indexer'){
 					if(rabillno==''){
@@ -279,13 +278,7 @@ function validate_RABill(pEvent,activityName){
 					}
 			}
 			
-			else if(activityName=='Accounts'){
-				if(postingdate==''){
-					com.newgen.omniforms.util.showError("","Kindly Enter Posting Date");
-					return false;
-				}
-			}
-			else if(activityName=='Indexer'||activityName=='Approver'||activityName=='Accounts'){
+			else if(activityName=='Indexer'||activityName=='Approver'||activityName=='AccountsMaker' || activityName=='AccountsChecker'){
 				if(filestatus==''){
 					com.newgen.omniforms.util.showError("","Kindly Select File Status");
 					return false;
@@ -295,6 +288,16 @@ function validate_RABill(pEvent,activityName){
 					return false;
 				}
 			
+			}
+			if(activityName=='AccountsMaker' || activityName=='AccountsChecker'){
+				if(postingdate==''){
+					com.newgen.omniforms.util.showError("","Kindly Enter Posting Date");
+					return false;
+				}
+				if(description==''){
+					com.newgen.omniforms.util.showError("","Kindly Enter Description");
+					return false;
+				}
 			}
 			
 			
@@ -375,7 +378,8 @@ switch(activityName)
 				com.newgen.omniforms.formviewer.setTop("Tab2","725px");
 				break;
 				
-				case 'Accounts':
+				case 'AccountsMaker':
+				case 'AccountsChecker':
 				case 'AXSyncException':
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 0 , true);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , true);

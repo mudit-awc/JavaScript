@@ -130,6 +130,7 @@ function eventDispatched_SupplyPoInvoices(pId, pEvent) {
 				case 'Btn_combine':
 				case 'Btn_Resolve':
 				case 'qtd_exempt':
+				case 'Btn_cancelGRN':
 					return true;
 					break;
 
@@ -248,8 +249,7 @@ function eventDispatched_SupplyPoInvoices(pId, pEvent) {
 
 				case 'invoicedate':
 					return true;
-
-
+				
 				case 'qwht_tdspercent':
 				case 'qwht_adjustedoriginamount':
 					return true;
@@ -314,11 +314,21 @@ function eventDispatched_SupplyPoInvoices(pId, pEvent) {
 					var storestatus = document.getElementById('storestatus').value;
 					if (storestatus == 'Exception') {
 						com.newgen.omniforms.formviewer.setVisible("Label45", true);
-						com.newgen.omniforms.formviewer.setVisible("storeexception", true);
+						com.newgen.omniforms.formviewer.setVisible("storeexception", true);						
+						com.newgen.omniforms.formviewer.setVisible("Label27", false);
+						com.newgen.omniforms.formviewer.setVisible("multiplegrnholdflag", false);
+					} else if (storestatus == 'Submit For GRN'
+					||storestatus == 'Create GRN') {
+						com.newgen.omniforms.formviewer.setVisible("Label45", false);
+						com.newgen.omniforms.formviewer.setVisible("storeexception", false);
+						com.newgen.omniforms.formviewer.setVisible("Label27", true);
+						com.newgen.omniforms.formviewer.setVisible("multiplegrnholdflag", true);
 					}
 					else {
 						com.newgen.omniforms.formviewer.setVisible("Label45", false);
-						com.newgen.omniforms.formviewer.setVisible("storeexception", false);
+						com.newgen.omniforms.formviewer.setVisible("storeexception", false);				
+						com.newgen.omniforms.formviewer.setVisible("Label27", false);
+						com.newgen.omniforms.formviewer.setVisible("multiplegrnholdflag", false);
 					}
 					return true;
 
@@ -434,6 +444,14 @@ function validate_SupplyPoInvoices(pEvent, activityName) {
 							return false;
 						}
 					}
+					if (storestatus == 'Submit For GRN'
+					|| storestatus == 'Create GRN') {
+						let multiplegrnholdflag = document.getElementById('multiplegrnholdflag').value;
+						if (multiplegrnholdflag == '' || multiplegrnholdflag == null) {
+							com.newgen.omniforms.util.showError("", "Kindly Select Hold For Single Invoice Multiple GRN Flag");
+							return false;
+						}
+					}
 				}
 
 				if (activityName == 'PurchaseUser') {
@@ -463,6 +481,29 @@ function validate_SupplyPoInvoices(pEvent, activityName) {
 						return false;
 					}
 					return true;
+				}
+				
+				
+				if (activityName == 'AccountsMaker'
+					|| activityName == 'AccountsChecker') {
+					let accountsstatus = document.getElementById('accountsstatus').value;
+					let narrationremarks = document.getElementById('narrationremarks').value;
+					if (narrationremarks == '') {
+						com.newgen.omniforms.util.showError("", "Kindly Enter any Narration Remarks");
+						return false;
+					}
+					if(accountsstatus==''){
+						com.newgen.omniforms.util.showError("", "Kindly Select Any Status");
+						return false;
+					}
+					if (accountsstatus == 'Exception') {
+						let accountsexception = document.getElementById('accountsexception').value;
+						if (accountsexception == '' || accountsexception == null) {
+							com.newgen.omniforms.util.showError("", "Kindly Select Any Exception");
+							return false;
+						}
+					}
+					
 				}
 				return true;
 			}
@@ -529,6 +570,7 @@ function formPopulated_SupplyPoInvoice(activityName) {
 
 		case 'StoreMaker':
 		case 'StoreChecker':
+		case 'HoldMultipleGRN':
 			var multiplegrn = document.getElementById("multiplegrn").value;
 			com.newgen.omniforms.formviewer.setVisible("btn_fetchpogedetails", false);
 			com.newgen.omniforms.formviewer.setHeight("Tab1", "312px");
@@ -556,6 +598,10 @@ function formPopulated_SupplyPoInvoice(activityName) {
 			console.log("multiplegrn :" + multiplegrn);
 			if (multiplegrn == 'True') {
 				com.newgen.omniforms.formviewer.setVisible("Frame4", false);
+				com.newgen.omniforms.formviewer.setTop("Label39", "46px");
+				com.newgen.omniforms.formviewer.setTop("storestatus", "64px");
+				com.newgen.omniforms.formviewer.setTop("Label40", "103px");
+				com.newgen.omniforms.formviewer.setTop("storeremarks", "120px");
 			}
 			break;
 
@@ -720,6 +766,7 @@ function formPopulated_SupplyPoInvoice(activityName) {
 
 		case 'PurchaseUser':
 			com.newgen.omniforms.formviewer.setEnabled("Frame2", false);
+			com.newgen.omniforms.formviewer.setEnabled("btn_fetchpogedetails", true);
 			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 0, true);
 			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1, true);
 			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2, true);
@@ -741,7 +788,7 @@ function formPopulated_SupplyPoInvoice(activityName) {
 
 		case 'AccountsMaker':
 		case 'AccountsChecker':
-			var multiplegrn = document.getElementById("multiplegrn");
+			var multiplegrn = document.getElementById("multiplegrn").value;
 			com.newgen.omniforms.formviewer.setHeight("Frame1", "1650px");
 			com.newgen.omniforms.formviewer.setHeight("Tab1", "312px");
 			//com.newgen.omniforms.formviewer.setHeight("Tab2", "361px");
@@ -773,7 +820,8 @@ function formPopulated_SupplyPoInvoice(activityName) {
 			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 7, true);
 			console.log("multiplegrn :" + multiplegrn);
 			if (multiplegrn == 'True') {
-				com.newgen.omniforms.formviewer.setVisible("Frame4", false);
+				com.newgen.omniforms.formviewer.setVisible("Frame11", true);
+				com.newgen.omniforms.formviewer.setVisible("Frame9", false);
 			}
 
 			break;

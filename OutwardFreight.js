@@ -156,6 +156,7 @@ function formPopulated_OutwardFreight(activityName){
 				setControlEnabled("amounttype",true);
 				setControlEnabled("baseamount",true);
 				setControlEnabled("currency",true);
+				setControlEnabled("description",true);
 				setControlEnabled("qoftd_hsnsactype",true);
 				setControlTop("Tab1","485px");
 				setControlHeight("Tab1","280px");
@@ -190,6 +191,7 @@ function validate_OutwardFreight(pEvent,activityName)
 			let remarks = document.getElementById('exempt').value;
 			let currency = document.getElementById('currency').value;
 			let exchangerateotherthaninr = document.getElementById('exchangerateotherthaninr').value;
+			let description = document.getElementById('description').value;
 			
 				if(activityName=='Initiator')
 				{										
@@ -234,6 +236,12 @@ function validate_OutwardFreight(pEvent,activityName)
 							com.newgen.omniforms.util.showError("","Kindly Enter the Exchange Rate");
 							return false;
 					}					
+				}
+				if(activityName=='Accounts'){
+					if(description==''){
+						com.newgen.omniforms.util.showError("","Kindly Enter Description");
+						return false;
+					}
 				}
 				if(activityName=='Initiator'||activityName=='Approver'||activityName=='Accounts')
 				{

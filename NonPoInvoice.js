@@ -216,15 +216,6 @@ function tab_clicked_NonPoInvoice(tabName, sheetIndex, activityName) {
 
 function formPopulated_NonPoInvoice(activityName) {
 	switch (activityName) {
-		case 'Introduction':
-			setControlEnabled("proctype", true);
-			setControlEnabled("scanuserremarks", true);
-			setControlVisible("Frame2", false);
-			setControlVisible("Tab1", false);
-			setControlVisible("Tab2", false);
-			//setControlHeight("FRM_NonPoInvoice","1390px");
-			break;
-
 		case 'Initiator':
 			setControlEnabled("site", true);
 			setControlEnabled("state", true);

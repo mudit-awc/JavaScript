@@ -1,15 +1,17 @@
 function eventDispatched_ServicePoInvoice(pId, pEvent) {
-	console.log("inside custom js function");
 	switch (pEvent.type) {
 		case 'click':
 			{
-				console.log("inside click event");
-				console.log(pEvent.srcElement.id);
 				switch (pEvent.srcElement.id) {
 					case 'Btn_Resolve':
 						{
 							return true;
 						}
+
+						case 'Btn_calculateRetention':
+							{
+								return true;
+							}
 
 					case 'Btn_Delete_Invoice':
 						if (confirm("Are You Sure You Want to Delete Row ?")) {
@@ -62,6 +64,8 @@ function eventDispatched_ServicePoInvoice(pId, pEvent) {
 					case 'Pick_qocVendor':
 					case 'Pick_Otherchrges_line_item_po':
 					case 'Pick_department':
+					case 'Pick_fd_warehouse':
+					case 'Clear_fd_warehouse':
 					case 'Clear_qocVendor':
 					case 'Clear_ledgeraccount':
 					case 'Clear_ledgercostcenter':
@@ -103,8 +107,8 @@ function eventDispatched_ServicePoInvoice(pId, pEvent) {
 							return true;
 						}
 						break;
-						
-						case 'qwht_adjustedtdsamount':
+
+					case 'qwht_adjustedtdsamount':
 						{
 							var qwht_adjustedtdsamount = document.getElementById("qwht_adjustedtdsamount").value;
 							qwht_adjustedtdsamount = Math.round(qwht_adjustedtdsamount);
@@ -232,9 +236,9 @@ function tab_clicked_ServicePoInvoice(tabName, sheetIndex, activityName) {
 					break;
 
 				case '8':
-					setControlHeight("Tab1", "373px");
-					setControlTop("Tab2", "1193px");
-					setControlHeight("FRM_ServicePoInvoice", "1565px");
+					setControlHeight("Tab1", "400px");
+					setControlTop("Tab2", "1223px");
+					setControlHeight("FRM_ServicePoInvoice", "1590px");
 					break;
 			}
 			break;
@@ -326,6 +330,7 @@ function formPopulated_ServicePoInvoice(activityName) {
 
 		case 'AccountsMaker':
 		case 'AccountsChecker':
+
 			setControlVisible("Btn_fetchpodetails", false);
 			setControlEnabled("proctype", false);
 			setControlVisible("Btn_DeletePO", false);
@@ -400,6 +405,7 @@ function validate_PoInvoices(pEvent, activityName) {
 				let remarks = document.getElementById('Text15').value;
 				let currency = document.getElementById('currency').value;
 				let postingdate = document.getElementById('postingdate').value;
+				let narrationremarks = document.getElementById('narrationremarks').value;
 
 				if (activityName == 'Initiator') {
 					if (invoicenumber == '') {
@@ -433,7 +439,12 @@ function validate_PoInvoices(pEvent, activityName) {
 					}
 
 				}
-				else if (activityName == 'Accounts' || activityName == 'AXSyncException') {
+
+				else if (activityName == 'AccountsMaker' || activityName == 'AccountsChecker' || activityName == 'AXSyncException') {
+					if (narrationremarks == '') {
+						showError("", "Kindly enter the Narration Remarks");
+						return false;
+					}
 					if (filestatus == '') {
 						showError("", "Kindly Enter the FileStatus");
 						return false;
