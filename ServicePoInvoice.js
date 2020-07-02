@@ -7,12 +7,12 @@ function eventDispatched_ServicePoInvoice(pId, pEvent) {
 						{
 							return true;
 						}
-
+						break;
 						case 'Btn_calculateRetention':
 							{
 								return true;
 							}
-
+						break;
 					case 'Btn_Delete_Invoice':
 						if (confirm("Are You Sure You Want to Delete Row ?")) {
 							return true;
@@ -25,9 +25,16 @@ function eventDispatched_ServicePoInvoice(pId, pEvent) {
 						{
 							return true;
 						}
-
+						break;
+						
 					case 'Btn_Add_linedetails_1':
+					{
+							return true;
+					}
+					break;
+					case 'Btn_refreshpodetails':
 						{
+							console.log("chal gya---------");
 							return true;
 						}
 						break;
@@ -102,6 +109,7 @@ function eventDispatched_ServicePoInvoice(pId, pEvent) {
 						}
 						break;
 
+					case 'qtd_taxamount':
 					case 'qwht_tdspercent':
 						{
 							return true;
@@ -157,7 +165,13 @@ function eventDispatched_ServicePoInvoice(pId, pEvent) {
 							return true;
 						}
 						break;
-				}
+						
+					case 'filestatus':
+						{
+							return true;
+						}
+						break;
+					}
 			}
 			break;
 	}
@@ -236,9 +250,9 @@ function tab_clicked_ServicePoInvoice(tabName, sheetIndex, activityName) {
 					break;
 
 				case '8':
-					setControlHeight("Tab1", "400px");
-					setControlTop("Tab2", "1223px");
-					setControlHeight("FRM_ServicePoInvoice", "1590px");
+					setControlHeight("Tab1", "481px");
+					setControlTop("Tab2", "1270px");
+					setControlHeight("FRM_ServicePoInvoice", "1640px");
 					break;
 			}
 			break;
@@ -263,6 +277,8 @@ function formPopulated_ServicePoInvoice(activityName) {
 			break;
 
 		case 'Initiator':
+			setControlVisible("Label42", false);
+			setControlVisible("qpo_amountwithtax", false);
 			setControlEnabled("holdamount", true);
 			setControlHeight("Tab1", "398px");
 			setControlTop("Tab2", "1217px");
@@ -277,7 +293,7 @@ function formPopulated_ServicePoInvoice(activityName) {
 			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 5, false);
 			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 6, false);
 			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 7, false);
-			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 8, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 8, true);
 			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2, false);
 			break;
 
@@ -330,7 +346,10 @@ function formPopulated_ServicePoInvoice(activityName) {
 
 		case 'AccountsMaker':
 		case 'AccountsChecker':
-
+			setControlVisible("Btn_refreshpodetails", true);
+			setControlEnabled("Btn_refreshpodetails", true);
+			setControlVisible("Label42", false);
+			setControlVisible("qpo_amountwithtax", false);
 			setControlVisible("Btn_fetchpodetails", false);
 			setControlEnabled("proctype", false);
 			setControlVisible("Btn_DeletePO", false);
@@ -341,7 +360,7 @@ function formPopulated_ServicePoInvoice(activityName) {
 			setControlEnabled("duedate", true);
 			setControlEnabled("holdamount", true);
 			setControlEnabled("narrationremarks", true);
-			setControlEnabled("invoiceamount", false);
+			setControlEnabled("invoiceamount", true);
 			setControlHeight("Tab1", "398px");
 			setControlTop("Tab2", "1218px");
 			setControlHeight("FRM_ServicePoInvoice", "1590px");
@@ -359,6 +378,8 @@ function formPopulated_ServicePoInvoice(activityName) {
 			break;
 
 		case 'AXSyncException':
+			setControlVisible("Label42", false);
+			setControlVisible("qpo_amountwithtax", false);
 			setControlVisible("Btn_fetchpodetails", false);
 			setControlEnabled("proctype", false);
 			setControlVisible("Btn_DeletePO", false);
@@ -406,8 +427,11 @@ function validate_PoInvoices(pEvent, activityName) {
 				let currency = document.getElementById('currency').value;
 				let postingdate = document.getElementById('postingdate').value;
 				let narrationremarks = document.getElementById('narrationremarks').value;
+				
+				
 
 				if (activityName == 'Initiator') {
+					if(filestatus!='Discard' && filestatus!='Exception'){
 					if (invoicenumber == '') {
 						showError("", "Kindly enter the Invoice Number");
 						return false;
@@ -431,6 +455,14 @@ function validate_PoInvoices(pEvent, activityName) {
 						showError("", "Kindly Enter the FileStatus");
 						return false;
 					}
+				}
+				if(filestatus=='Exception'){
+					let exceptionType = document.getElementById('Combo3').value;
+					if(exceptionType==''){
+						showError("", "Kindly Select any Exception");
+						return false;
+					}
+				}
 				}
 				else if (activityName == 'Approver') {
 					if (filestatus == '') {

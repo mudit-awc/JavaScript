@@ -76,6 +76,8 @@
                 Bug 89071       27/12/2019
 */
 
+//latinChars should be comma separated e.g. â,bē
+
 try{
 window.document.write("<script src="+"/webdesktop/resources/scripts/SupplyPoInvoices.js"+"></script>");
 window.document.write("<script src="+"/webdesktop/resources/scripts/NonPoInvoice.js"+"></script>");
@@ -86,8 +88,6 @@ window.document.write("<script src="+"/webdesktop/resources/scripts/OutwardFreig
 
 catch(e){
 }
-
-//latinChars should be comma separated e.g. â,bē
 var latinChars=["â"];//Bug 66390
 
 function executeActionClick(actionName)
@@ -1144,19 +1144,6 @@ function  RefreshClientComp(){
 	 ref.reloadPage(pid);  /*implemented by the calling page*/
          }catch(e){}
 }
-/*function eventDispatched(pId,pEvent){
-	switch(pEvent.type)
-    {           
-        case 'click':
-        {
-            switch(pId)
-            {
-				case 'opt1':alert('');
-				break;
-			}
-		}	
-	}
-}*/
 
 function getExtParam(processName, activityName)
 {
@@ -1606,9 +1593,20 @@ function customEventHandler(excpHandlerJson)
 	var pname=window.parent.strprocessname;
 	var activityName=window.parent.stractivityName;
 	var name;
+	
+		if(pname == "SupplyPoInvoices")
+	{
+		if(firstParam = "Btn_Export_GateEntry"){
+				window.open(secondParam,"GateEntryDetails",'resizable=yes,scrollbars=auto,width='+window1W+',height=320,left='+window1Y+',top='+window1X); 
+		}
+		
+		if(firstParam = "viewwi"){
+				window.open(secondParam,"GateEntryDetails",'resizable=yes,scrollbars=auto,width='+window1W+',height=320,left='+window1Y+',top='+window1X); 
+		}
+	}
+	
 	if(pname == "RABill")
 	{
-		console.log("Inside custom handler call");
 		if(firstParam = "Btn_Export_AbstractSheet"){
 				window.open(secondParam,firstParam,'resizable=yes,scrollbars=auto,width='+window1W+',height=320,left='+window1Y+',top='+window1X); 
 		}
@@ -1635,6 +1633,7 @@ function customEventHandler(excpHandlerJson)
 
 return excpHandlerJson;
 }
+
 function deleteDocument(processName,activityName){      //Bug 67762
     
     /* processName is name of the process
@@ -2153,7 +2152,7 @@ function interfacePostHook(interfaceType) {
     }
 }
 
-function deleteDocPostHandler(docIndex) {
+function deleteDocPostHandler(docIndex,deldocName) {
     //This is the handler called after deleting a document, here docIndex is being passed where docIndex= -1 represents Error.
 }
 
@@ -2461,6 +2460,45 @@ var arrDocIndex;
 function getCustomLayoutWidth(strprocessname,stractivityName){
     return "";
 }
+function closeWIPostHooK()
+{
+	return true;
+}
+
+function onSaveValidationFailure(errorMsg) {
+    return true;
+}
+
+function wiOperationPostHook(operation, status, errorMsg) {
+    /*
+     * -----------------------------------------
+     * operation:
+     * INTRODUCE - Introduce
+     * DONE - Done
+     * REFERSAVE - Refer
+     * REASSIGNSAVE - Reassign
+     * REVOKESAVE - Revoke
+     * LOCKFORMESAVE - Self Assign (Lock For Me)
+     * RELEASESAVE - Release
+     * -----------------------------------------
+     * status:
+     * error - Some error occurred
+     * success - Operation successfully executed
+     * -----------------------------------------
+     * errorMsg:
+     * Blank if status is success otherwise the
+     * error message for operation failure
+     * -----------------------------------------
+     */
+}
+
+function isShowVersionForReadOnlyDoc(processName, activityName, documentType, userName) {
+    return false;
+}
+
+function enableDocDownloadFromVersion (processName, activityName, userName) {
+	return false;
+}
 
 function formPopulated()
 {
@@ -2610,6 +2648,3 @@ function eventTabClick(tabName,sheetIndex)
 	}
 return true;	
 }
-
-
-

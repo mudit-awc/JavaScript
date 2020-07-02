@@ -131,6 +131,9 @@ function eventDispatched_SupplyPoInvoices(pId, pEvent) {
 				case 'Btn_Resolve':
 				case 'qtd_exempt':
 				case 'Btn_cancelGRN':
+				case 'Btn_Export_GateEntry':
+				case 'Pick_chargesCode':
+				case 'Btn_View':
 					return true;
 					break;
 
@@ -225,7 +228,7 @@ function eventDispatched_SupplyPoInvoices(pId, pEvent) {
 				case 'invoicedate':
 					return true;
 					break;
-
+				
 				case 'purchaseorderno':
 					return true;
 					break;
@@ -249,8 +252,14 @@ function eventDispatched_SupplyPoInvoices(pId, pEvent) {
 
 				case 'invoicedate':
 					return true;
+				case 'qtd_hsnsacdescription':	
+					alert("inside tooltip");
+					com.newgen.omniforms.formviewer.setToolTip("qtd_taxcomponent",document.getElementById('qtd_taxcomponent').value);
+					alert("after tool tip");
+					return true;
 				
 				case 'qwht_tdspercent':
+				case 'qtd_taxamount':
 				case 'qwht_adjustedoriginamount':
 					return true;
 
@@ -408,6 +417,7 @@ function validate_SupplyPoInvoices(pEvent, activityName) {
 						}
 
 					}
+					if (initiatorstatus != 'Exception' && initiatorstatus != 'Discard') {
 					if (ponumber == '' || ponumber == null) {
 						com.newgen.omniforms.util.showError("", "Kindly Enter the Purchase Order Number");
 						return false;
@@ -428,6 +438,7 @@ function validate_SupplyPoInvoices(pEvent, activityName) {
 						com.newgen.omniforms.util.showError("", "Kindly enter the decision");
 						return false;
 					}
+				}
 				}
 
 				if (activityName == 'StoreMaker'
@@ -570,6 +581,45 @@ function formPopulated_SupplyPoInvoice(activityName) {
 
 		case 'StoreMaker':
 		case 'StoreChecker':
+			var multiplegrn = document.getElementById("multiplegrn").value;
+			com.newgen.omniforms.formviewer.setVisible("Btn_View", true);
+			com.newgen.omniforms.formviewer.setVisible("Btn_cancelGRN", true);
+			com.newgen.omniforms.formviewer.setVisible("btn_fetchpogedetails", false);
+			com.newgen.omniforms.formviewer.setHeight("Tab1", "312px");
+			com.newgen.omniforms.formviewer.setTop("Tab2", "1195px");
+			//com.newgen.omniforms.formviewer.setHeight("Tab2", "578px");
+			com.newgen.omniforms.formviewer.setHeight("Frame1", "1655px");
+			com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices", "1655px");
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 0, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 4, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 5, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 6, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 7, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 8, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 0, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4, true);//@chnge
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 6, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 7, true);
+			com.newgen.omniforms.formviewer.setEnabled("accountsstatus",false);//@added
+			com.newgen.omniforms.formviewer.setEnabled("accountsremarks",false);//@added
+			console.log("multiplegrn :" + multiplegrn);
+			if (multiplegrn == 'True') {
+				com.newgen.omniforms.formviewer.setVisible("Frame4", false);
+				com.newgen.omniforms.formviewer.setTop("Label39", "46px");
+				com.newgen.omniforms.formviewer.setTop("storestatus", "64px");
+				com.newgen.omniforms.formviewer.setTop("Label40", "103px");
+				com.newgen.omniforms.formviewer.setTop("storeremarks", "120px");
+			}
+			break;
+			
+		
 		case 'HoldMultipleGRN':
 			var multiplegrn = document.getElementById("multiplegrn").value;
 			com.newgen.omniforms.formviewer.setVisible("btn_fetchpogedetails", false);
@@ -606,6 +656,7 @@ function formPopulated_SupplyPoInvoice(activityName) {
 			break;
 
 		case 'AXStoreSyncException':
+			com.newgen.omniforms.formviewer.setVisible("Btn_cancelGRN", true);
 			com.newgen.omniforms.formviewer.setVisible("btn_fetchpogedetails", false);
 			com.newgen.omniforms.formviewer.setHeight("Tab1", "312px");
 			com.newgen.omniforms.formviewer.setTop("Tab2", "1195px");
@@ -789,6 +840,7 @@ function formPopulated_SupplyPoInvoice(activityName) {
 		case 'AccountsMaker':
 		case 'AccountsChecker':
 			var multiplegrn = document.getElementById("multiplegrn").value;
+			com.newgen.omniforms.formviewer.setVisible("Btn_View", true);
 			com.newgen.omniforms.formviewer.setHeight("Frame1", "1650px");
 			com.newgen.omniforms.formviewer.setHeight("Tab1", "312px");
 			//com.newgen.omniforms.formviewer.setHeight("Tab2", "361px");
@@ -826,6 +878,45 @@ function formPopulated_SupplyPoInvoice(activityName) {
 
 			break;
 
+	case 'End':
+			var multiplegrn = document.getElementById("multiplegrn").value;
+			com.newgen.omniforms.formviewer.setHeight("Frame1", "1650px");
+			com.newgen.omniforms.formviewer.setHeight("Tab1", "312px");
+			//com.newgen.omniforms.formviewer.setHeight("Tab2", "361px");
+			com.newgen.omniforms.formviewer.setHeight("FRM_SupplyPoInvoices", "1650px");
+			com.newgen.omniforms.formviewer.setTop("Tab2", "1195px");
+			com.newgen.omniforms.formviewer.setVisible("btn_fetchpogedetails", false);
+
+			com.newgen.omniforms.formviewer.setEnabled("postingdate", false);
+			com.newgen.omniforms.formviewer.setEnabled("duedate", false);
+			com.newgen.omniforms.formviewer.setEnabled("holdamount", false);
+			com.newgen.omniforms.formviewer.setEnabled("narrationremarks", false);
+			com.newgen.omniforms.formviewer.setEnabled("Tab1", false);
+			com.newgen.omniforms.formviewer.setEnabled("Tab2", false);
+			
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 0, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 4, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 5, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 6, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 7, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 8, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 0, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 4, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 5, true);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 6, false);
+			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 7, true);
+			console.log("multiplegrn :" + multiplegrn);
+			
+			com.newgen.omniforms.formviewer.setEnabled("Frame2", false);
+			com.newgen.omniforms.formviewer.setEnabled("Btn_Export_GateEntry", true);
+			break;
+			
 		case 'AXAccountsSyncException':
 			com.newgen.omniforms.formviewer.setHeight("Frame1", "1650px");
 			com.newgen.omniforms.formviewer.setHeight("Tab1", "312px");

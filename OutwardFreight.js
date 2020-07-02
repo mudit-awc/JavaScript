@@ -12,6 +12,7 @@ function eventDispatched_OutwardFreight(pId,pEvent)
 				case 'Pick_account':
 				case 'Pick_paymentterm':
 				case 'Pick_tdsgroup':
+				case 'Pick_companylocation':
 				{	
 					console.log("event pick_tdsgroup");
 					return true;	
@@ -45,6 +46,13 @@ function eventDispatched_OutwardFreight(pId,pEvent)
 					return true;
 				}				
 				break;		
+				
+				case 'qofwht_adjustedtdsamount':
+				var qofwht_adjustedtdsamount = document.getElementById("qofwht_adjustedtdsamount").value;
+							qofwht_adjustedtdsamount = Math.round(qofwht_adjustedtdsamount);
+							com.newgen.omniforms.formviewer.setNGValue("qofwht_adjustedtdsamount", qofwht_adjustedtdsamount);
+							return true;
+				break;
 			
 			}
 			
@@ -123,9 +131,9 @@ function formPopulated_OutwardFreight(activityName){
 				setControlHeight("Frame2","800px");
 				setControlTop("Tab2","1000px");
 				setControlHeight("OutwardFreight","1200px");
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , false);
+	//			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , false);
 				com.newgen.omniforms.formviewer.setNGValue("exempt","");
-
+				setControlEnabled("Pick_companylocation",true);
 				break;
 				
 				case 'Approver':
@@ -142,16 +150,20 @@ function formPopulated_OutwardFreight(activityName){
 				setControlHeight("Frame2","800px");
 				setControlTop("Tab2","1000px");
 				setControlHeight("OutwardFreight","1200px");
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , false);
+	//			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , false);
 				com.newgen.omniforms.formviewer.setNGValue("exempt","");
+				setControlEnabled("Pick_companylocation",true);
 				break;
 				
-				case 'Accounts':
+				case 'AccountsMaker':
+				case 'AccountsChecker':
+				case 'AXSyncException':
 				setControlVisible("Pick_account",false);
 				setControlVisible("Pick_paymentterm",false);
 				setControlVisible("Frame2", true);
 				setControlEnabled("Frame2",false);
 				setControlEnabled("invoicenumber",true);
+				setControlEnabled("Pick_companylocation",true);
 				setControlEnabled("invoicedate",true);
 				setControlEnabled("amounttype",true);
 				setControlEnabled("baseamount",true);
@@ -163,9 +175,15 @@ function formPopulated_OutwardFreight(activityName){
 				setControlHeight("Frame2","800px");
 				setControlTop("Tab2","1000px");
 				setControlHeight("OutwardFreight","1200px");
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , false);
+	//			com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , false);
 				com.newgen.omniforms.formviewer.setNGValue("exempt","");
+				setControlEnabled("qofwht_adjustedtdsamount",true);
+				setControlEnabled("qofwht_tdsamount",true);
+				setControlEnabled("qoftd_taxamountadjustment",true);
+				setControlEnabled("qofwht_adjustedoriginamount",true);
 				break;
+				
+				
 			}
 	return true;
 }
@@ -192,6 +210,7 @@ function validate_OutwardFreight(pEvent,activityName)
 			let currency = document.getElementById('currency').value;
 			let exchangerateotherthaninr = document.getElementById('exchangerateotherthaninr').value;
 			let description = document.getElementById('description').value;
+			let journalname = document.getElementById('journalname').value;
 			
 				if(activityName=='Initiator')
 				{										
@@ -237,13 +256,17 @@ function validate_OutwardFreight(pEvent,activityName)
 							return false;
 					}					
 				}
-				if(activityName=='Accounts'){
+				if(activityName=='AccountsMaker'||activityName=='AccountsChecker'){
 					if(description==''){
 						com.newgen.omniforms.util.showError("","Kindly Enter Description");
 						return false;
 					}
+					if(journalname==''){
+						com.newgen.omniforms.util.showError("","Kindly Select Journal Name");
+						return false;
+					}
 				}
-				if(activityName=='Initiator'||activityName=='Approver'||activityName=='Accounts')
+				if(activityName=='Initiator'||activityName=='Approver'||activityName=='AccountsMaker'||activityName=='AccountsChecker')
 				{
 					if(filestatus=='')
 					{

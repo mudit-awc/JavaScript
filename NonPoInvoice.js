@@ -28,6 +28,7 @@ function eventDispatched_NonPoInvoice(pId, pEvent) {
 						}
 						break;
 
+					case 'Pick_ProjectName':
 					case 'Pick_journalname':
 					case 'Pick_account':
 					case 'Pick_department':
@@ -129,10 +130,10 @@ function tab_clicked_NonPoInvoice(tabName, sheetIndex, activityName) {
 			console.log("inside tab1");
 			switch (SheetIndex) {
 				case '0':
-					setControlHeight("Tab1", "540px");
+					setControlHeight("Tab1", "560px");
 					setControlTop("Tab1", "633px");
-					setControlTop("Tab2", "1200px");
-					setControlHeight("FRM_NonPoInvoice", "1570px");
+					setControlTop("Tab2", "1220px");
+					setControlHeight("FRM_NonPoInvoice", "1590px");
 					break;
 
 				case '1':		//CTI
@@ -217,6 +218,7 @@ function tab_clicked_NonPoInvoice(tabName, sheetIndex, activityName) {
 function formPopulated_NonPoInvoice(activityName) {
 	switch (activityName) {
 		case 'Initiator':
+			setControlEnabled("Pick_journalname", false);
 			setControlEnabled("site", true);
 			setControlEnabled("state", true);
 			setControlEnabled("proctype", true);
@@ -268,16 +270,18 @@ function formPopulated_NonPoInvoice(activityName) {
 			setControlEnabled("baseamount", true);
 			setControlEnabled("invoiceamount", true);
 			setControlEnabled("currency", true);
-			setControlHeight("FRM_NonPoInvoice", "1578px");
-			setControlTop("Tab1", "632px");
-			setControlTop("Tab2", "1210px");
+			setControlHeight("FRM_NonPoInvoice", "1590px");
+			setControlHeight("Tab1", "560px");
+			setControlTop("Tab1", "633px");
+			setControlTop("Tab2", "1220px");
 			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2, false);
 			break;
 
 		case 'AXSyncException':
-			setControlTop("Tab1", "632px");
-			setControlTop("Tab2", "1210px");
-			setControlHeight("FRM_NonPoInvoice", "1578px");
+			setControlHeight("Tab1", "560px");
+			setControlTop("Tab1", "633px");
+			setControlTop("Tab2", "1220px");
+			setControlHeight("FRM_NonPoInvoice", "1590px");
 			
 			com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 0, false);
 			break;
@@ -315,8 +319,9 @@ function validate_NonPoInvoices(pEvent, activityName) {
 				let vendorstate = document.getElementById('vendorstate').value;
 				let remarks = document.getElementById('Text51').value;
 				let description = document.getElementById('description').value;
-
+				
 				if (activityName == 'Initiator') {
+					if(filestatus!='Discard'){
 					// if (journalname == '') {
 					// 	showError("", "Kindly enter the Journal Name");
 					// 	return false;
@@ -370,7 +375,7 @@ function validate_NonPoInvoices(pEvent, activityName) {
 						showError("", "Kindly Enter the Remarks");
 						return false;
 					}
-
+				}
 				}
 				else if (activityName == 'Approver') {
 
@@ -471,6 +476,7 @@ function validate_NonPoInvoices(pEvent, activityName) {
 					 	return false;
 					}
 				}
+			
 			}
 			break;
 

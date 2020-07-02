@@ -111,6 +111,13 @@ function eventDispatched_RABill(pId,pEvent)
 					return true;
 				}
 				break;
+				
+				case 'qrawht_adjustedtdsamount':
+				var qrawht_adjustedtdsamount = document.getElementById("qrawht_adjustedtdsamount").value;
+							qrawht_adjustedtdsamount = Math.round(qrawht_adjustedtdsamount);
+							com.newgen.omniforms.formviewer.setNGValue("qrawht_adjustedtdsamount", qrawht_adjustedtdsamount);
+							return true;
+				break;
 			}
 			break;
 			return true;
@@ -122,9 +129,6 @@ function tab_clicked_RABill(tabName,sheetIndex,activityName){
 	
 	let tabName1 = tabName;
 	let sheetIndex1 = sheetIndex;
-	console.log("tabName1 : "+tabName1);
-	console.log("sheetIndex1 : "+sheetIndex1);
-	console.log("activityName : "+activityName);
 	switch(tabName1){
 		case 'Tab1': //Tab Name
 			switch(sheetIndex1){				
@@ -255,6 +259,10 @@ function validate_RABill(pEvent,activityName){
         case 'I':
 		case 'D':
 		{
+			var invoicenumber = document.getElementById('invoicenumber').value;
+			var invoiceamount = document.getElementById('invoiceamount').value;
+			var invoicedate = document.getElementById('invoicedate').value;
+			var baseamount = document.getElementById('baseamount').value;
 			var filestatus = document.getElementById('filestatus').value;
 			var remarks = document.getElementById('Text69').value;
 			var rabillno = document.getElementById('rabillno').value;
@@ -263,6 +271,42 @@ function validate_RABill(pEvent,activityName){
 			var postingdate = document.getElementById('postingdate').value;
 			var description = document.getElementById('description').value;
 			console.log("Introduce/Done");
+			
+			if(activityName=='ScanningUser'){
+				if(filestatus!='Discard' && filestatus!='Exception'){
+					if(invoicenumber==''){
+						com.newgen.omniforms.util.showError("","Kindly Enter Invoice No");
+						return false;
+					}
+					if(invoicedate==''){
+						com.newgen.omniforms.util.showError("","Kindly Enter Invoice Date");
+						return false;
+					}
+					if(invoiceamount==''){
+						com.newgen.omniforms.util.showError("","Kindly Enter Invoice Amount");
+						return false;
+					}
+					if(baseamount==''){
+						com.newgen.omniforms.util.showError("","Kindly Enter Baseamount");
+						return false;
+					}
+					if(rabillno==''){
+						com.newgen.omniforms.util.showError("","Kindly Enter Ra Bill No");
+						return false;
+					}
+					if(rabilldate==''){
+						com.newgen.omniforms.util.showError("","Kindly Enter Ra Bill Date");
+						return false;
+					}
+				}
+				if(filestatus=='Exception'){
+					var exceptiontype = document.getElementById('Combo1').value;
+					if(exceptiontype==''){
+						com.newgen.omniforms.util.showError("","Kindly Select Any Exception");
+						return false;
+					}
+				}
+			}
 			if(activityName=='Indexer'){
 					if(rabillno==''){
 						com.newgen.omniforms.util.showError("","Kindly Enter Ra Bill No");
@@ -300,9 +344,6 @@ function validate_RABill(pEvent,activityName){
 				}
 			}
 			
-			
-			
-			
 		}
 		break;
 		  
@@ -318,11 +359,13 @@ return true;
 
 function formPopulated_RABill(activityName){
 switch(activityName)
-            {
+            {	
+				
+				
 				case 'Introduction':
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 0 , true);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , true);
-				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , true);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 4 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 5 , false);
@@ -337,6 +380,28 @@ switch(activityName)
 				com.newgen.omniforms.formviewer.setTop("Tab2","855px");
 				break;
 				
+				case 'ScanningUser' :
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 0 , true);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , true);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , true);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 3 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 4 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 5 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 6 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 7 , false);				
+				com.newgen.omniforms.formviewer.setEnabled("postingdate", false);
+				com.newgen.omniforms.formviewer.setEnabled("duedate", false);
+				com.newgen.omniforms.formviewer.setHeight("Tab1","430px");
+				com.newgen.omniforms.formviewer.setHeight("Frame2","765px");
+				com.newgen.omniforms.formviewer.setHeight("Frame1","1220px");
+				com.newgen.omniforms.formviewer.setHeight("RABill","1225px");
+				com.newgen.omniforms.formviewer.setTop("Tab2","855px");
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 0 , true);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , true);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
+				break;
+				
 				case 'Indexer':
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 0 , true);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , true);
@@ -347,13 +412,16 @@ switch(activityName)
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 6 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 7 , false);
 				com.newgen.omniforms.formviewer.setEnabled("postingdate", false);
-				com.newgen.omniforms.formviewer.setEnabled("duedate", false);
-				
+				com.newgen.omniforms.formviewer.setEnabled("duedate", false);		
 				com.newgen.omniforms.formviewer.setHeight("Tab1","430px");
 				com.newgen.omniforms.formviewer.setHeight("Frame2","765px");
 				com.newgen.omniforms.formviewer.setHeight("Frame1","1220px");
 				com.newgen.omniforms.formviewer.setHeight("RABill","1225px");
 				com.newgen.omniforms.formviewer.setTop("Tab2","855px");
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 0 , true);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 1 , true);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 2 , false);
+				com.newgen.omniforms.formviewer.setSheetVisible("Tab2", 3 , false);
 				break;
 				
 				case 'Approver':
@@ -367,7 +435,7 @@ switch(activityName)
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 6 , false);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 7 , false);
 				com.newgen.omniforms.formviewer.setEnabled("Frame2", false);
-				com.newgen.omniforms.formviewer.setEnabled("Tab2", false);
+				com.newgen.omniforms.formviewer.setEnabled("Tab2", true);
 				com.newgen.omniforms.formviewer.setEnabled("Tab1", false);
 				com.newgen.omniforms.formviewer.setEnabled("Text69", true);
 				com.newgen.omniforms.formviewer.setEnabled("filestatus", true);
@@ -381,6 +449,9 @@ switch(activityName)
 				case 'AccountsMaker':
 				case 'AccountsChecker':
 				case 'AXSyncException':
+				com.newgen.omniforms.formviewer.setVisible("Btn_Export_AbstractSheet", true);
+				com.newgen.omniforms.formviewer.setVisible("Btn_Export_ItemJournal", true);
+				
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 0 , true);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 1 , true);
 				com.newgen.omniforms.formviewer.setSheetVisible("Tab1", 2 , true);
